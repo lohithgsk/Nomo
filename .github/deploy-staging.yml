@@ -1,0 +1,67 @@
+name: Deploy to Staging
+
+# Auto-deploys main to staging after CI passes. Scoped per-app so merging
+# a mobile-only change doesn't redeploy the API, and vice versa.
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false # never cancel a deploy mid-flight
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      api: ${{ steps.filter.outputs.api }}
+      mobile: ${{ steps.filter.outputs.mobile }}
+      web: ${{ steps.filter.outputs.web }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            api:
+              - 'apps/api/**'
+              - 'packages/shared/**'
+            mobile:
+              - 'apps/mobile/**'
+              - 'packages/shared/**'
+            web:
+              - 'apps/web/**'
+              - 'packages/shared/**'
+
+  deploy-api:
+    needs: changes
+    if: needs.changes.outputs.api == 'true'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      # Replace with your actual deploy step (Fly.io, Render, ECS, etc.)
+      - name: Deploy API to staging
+        run: echo "Deploying apps/api to staging..."
+
+  deploy-web:
+    needs: changes
+    if: needs.changes.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      # Replace with your actual deploy step (Vercel, Netlify, S3+CloudFront, etc.)
+      - name: Deploy web to staging
+        run: echo "Deploying apps/web to staging..."
+
+  publish-mobile-preview:
+    needs: changes
+    if: needs.changes.outputs.mobile == 'true'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      # Replace with your actual build step (EAS Build/Update, Fastlane, etc.)
+      - name: Publish mobile preview build
+        run: echo "Publishing mobile staging build..."
