@@ -1,0 +1,26 @@
+name: CodeQL Security Scan
+
+# Deliberately NOT on every push — runs on PRs to main and a weekly schedule.
+# Security scanning is slow and doesn't need to run on every commit.
+on:
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 3 * * 1' # every Monday 03:00 UTC
+  workflow_dispatch: {} # allow manual runs from the Actions tab
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    strategy:
+      matrix:
+        language: ['javascript-typescript']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+      - uses: github/codeql-action/analyze@v3

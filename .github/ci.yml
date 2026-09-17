@@ -1,0 +1,122 @@
+name: CI
+
+# Runs on every PR targeting main, and on pushes to main (post-merge safety net).
+# Draft PRs are skipped by default to save minutes — mark "Ready for review" to trigger.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Cancel superseded runs on the same branch/PR so pushing a new commit
+# doesn't leave old, now-irrelevant runs burning minutes.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------------------------------------------------------------------
+  # Detect which parts of the monorepo changed. Every downstream job reads
+  # these outputs and only runs if its area was touched.
+  # ---------------------------------------------------------------------
+  changes:
+    if: github.event.pull_request.draft == false || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    outputs:
+      api: ${{ steps.filter.outputs.api }}
+      mobile: ${{ steps.filter.outputs.mobile }}
+      web: ${{ steps.filter.outputs.web }}
+      shared: ${{ steps.filter.outputs.shared }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            api:
+              - 'apps/api/**'
+              - 'packages/shared/**'
+            mobile:
+              - 'apps/mobile/**'
+              - 'packages/shared/**'
+              - 'packages/design-system/**'
+            web:
+              - 'apps/web/**'
+              - 'packages/shared/**'
+              - 'packages/design-system/**'
+            shared:
+              - 'packages/shared/**'
+
+  api:
+    needs: changes
+    if: needs.changes.outputs.api == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test -- --ci
+      - run: npm run build
+
+  mobile:
+    needs: changes
+    if: needs.changes.outputs.mobile == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test -- --ci
+      - run: npm run build
+
+  web:
+    needs: changes
+    if: needs.changes.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test -- --ci
+      - run: npm run build
+
+  # Single required status check to point branch protection at, regardless
+  # of which of the jobs above actually ran.
+  ci-summary:
+    needs: [changes, api, mobile, web]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check results
+        run: |
+          if [[ "${{ needs.api.result }}" == "failure" || \
+                "${{ needs.mobile.result }}" == "failure" || \
+                "${{ needs.web.result }}" == "failure" ]]; then
+            echo "One or more CI jobs failed."
+            exit 1
+          fi
+          echo "CI passed (or was skipped where nothing changed)."
