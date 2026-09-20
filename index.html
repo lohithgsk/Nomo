@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>nomo | Stop scrolling menus. Start a food journey.</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600&family=Nunito:wght@400;600;800&family=Cormorant+Garamond:wght@500;600&family=DM+Serif+Display&family=Jost:wght@300;400;500&family=Lora:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#fff8ec;--ink:#2b1710;--card:#fff;--line:#ecd9bf;--mut:#7b5f4d;--red:#d9381e;--gold:#f2a91d;--green:#3f7d3a;--gin:rgba(217,56,30,.09);
 --serif:'Fraunces',Georgia,serif;--sans:'Nunito',system-ui,sans-serif}
@@ -71,12 +71,6 @@ dialog::backdrop{background:rgba(20,8,2,.6);backdrop-filter:blur(5px)}
 .tabs{display:flex;gap:6px;margin-bottom:14px}.tabs .chip{flex:1}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.f2 .full{grid-column:1/-1}
 .err{color:var(--red);font-weight:700;min-height:1.4em;margin:8px 0 0}
-.pp{display:grid;grid-template-columns:170px 1fr;gap:26px;background:linear-gradient(135deg,#1f4a35,#12301f);color:#fdf3e1;border-radius:26px;padding:clamp(20px,4vw,40px);border:3px solid var(--gold);box-shadow:0 26px 60px rgba(0,0,0,.28)}
-.ph{aspect-ratio:3/4;border-radius:14px;background:#fdf3e1;color:#1f4a35;display:grid;place-items:center;font:900 4rem var(--serif)}
-.pp small{display:block;color:var(--gold);font-weight:800;font-size:.7rem;letter-spacing:.06em}
-.pp .d{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:14px}
-.pp .d b{font-size:1.1rem}
-.mrz{grid-column:1/-1;font:600 .85rem/1.5 ui-monospace,monospace;letter-spacing:.14em;overflow:hidden;opacity:.7;white-space:nowrap}
 .stamps{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:14px;margin-top:20px}
 .slot{aspect-ratio:1;border:2px dashed var(--line);border-radius:50%;display:grid;place-items:center;text-align:center;font-size:.72rem;padding:8px;color:var(--mut)}
 .stamp{border:3px solid var(--red);color:var(--red);font-weight:800;line-height:1.1;background:var(--gin);animation:thud .5s cubic-bezier(.2,1.6,.4,1) both}
@@ -89,7 +83,70 @@ dialog::backdrop{background:rgba(20,8,2,.6);backdrop-filter:blur(5px)}
 .sm{border:2px solid var(--line);background:none;color:var(--ink);border-radius:99px;padding:5px 14px;font-weight:700}.sm.on{background:var(--red);border-color:var(--red);color:#fff}
 .rep{border-left:3px solid var(--gold);padding-left:12px;margin:8px 0;color:var(--mut)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,150%);background:var(--ink);color:var(--bg);font-weight:800;padding:12px 24px;border-radius:99px;z-index:60;transition:transform .4s cubic-bezier(.2,1.4,.4,1)}.toast.show{transform:translate(-50%,0)}
-@media (max-width:760px){.hero{grid-template-columns:1fr}.pp{grid-template-columns:1fr}.ph{max-width:130px}nav{grid-template-columns:auto 1fr auto}.links{justify-content:center}.logo{font-size:1.6rem}}
+dialog{max-height:92vh;overflow:auto}
+.exh{border-radius:28px;padding:clamp(20px,4vw,40px);margin-bottom:22px;border:2px solid var(--line);background-color:var(--card)}
+.rt{height:104px;border-radius:16px;margin-bottom:12px;display:grid;place-items:center;font-size:2.8rem;border:2px solid var(--line)}
+.book{display:grid;grid-template-columns:minmax(150px,.5fr) 1.5fr;gap:22px}
+.cover{border-radius:10px 22px 22px 10px;background:radial-gradient(circle at 30% 20%,#9b2335,#5c0f1c 70%);border:2px solid #3a0a12;box-shadow:inset 8px 0 0 rgba(0,0,0,.35),0 24px 50px rgba(60,10,20,.4);display:grid;place-items:center;padding:20px;text-align:center;color:#e6b85c;min-height:320px}
+.cover h3{font-size:1.4rem;letter-spacing:.14em;margin:12px 0;text-shadow:0 1px 0 #000}.cover .cm{font-size:3rem}.cover small{letter-spacing:.3em;font-weight:800}
+.page{position:relative;border-radius:22px 10px 10px 22px;background:repeating-radial-gradient(circle at 18% 40%,rgba(176,50,58,.09) 0 2px,transparent 2px 9px),repeating-radial-gradient(circle at 85% 70%,rgba(200,150,60,.13) 0 2px,transparent 2px 9px),#f8eed8;color:#3a1a12;padding:clamp(16px,3vw,30px);box-shadow:0 24px 50px rgba(60,10,20,.25);border:2px solid #e2cfa6;overflow:hidden}
+.ph2{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;border-bottom:3px double #b0323a;padding-bottom:10px;color:#7a1424}
+.pb{display:grid;grid-template-columns:130px 1fr;gap:20px;margin-top:16px}
+.pic{aspect-ratio:3/4;background:#e9d5aa;border:2px solid #b08a3a;display:grid;place-items:center;font:900 3rem var(--serif);color:#7a1424;border-radius:6px}
+.pf{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.pf small{display:block;font-size:.65rem;font-weight:800;letter-spacing:.08em;color:#8a6a4a}.pf b{font-size:1.05rem;overflow-wrap:anywhere}
+.mrz2{margin-top:18px;font:700 .8rem/1.5 ui-monospace,monospace;letter-spacing:.13em;opacity:.75;white-space:nowrap;overflow:hidden}
+.seal{position:absolute;right:16px;bottom:52px;border:3px solid #1d3d7a;color:#1d3d7a;border-radius:50%;width:84px;height:84px;display:grid;place-items:center;font-weight:900;transform:rotate(-14deg);opacity:.5}
+.visa{background:#f8eed8;color:#3a1a12;border-radius:22px;padding:22px;margin-top:18px;border:2px solid #e2cfa6}
+.visa .stamps{margin-top:0}.visa .slot{border-color:#c9b184;color:#8a6a4a}.visa .stamp{background:transparent}
+.rv{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 0;border-bottom:1px dashed var(--line)}
+.ft{margin-top:20px;background:#0a0a0a;color:#d6d6d6;padding:44px clamp(14px,5vw,70px) 24px}
+.fw{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:28px}
+.ft b{display:block;margin-bottom:8px;color:#fff;font-family:var(--serif);font-size:1.1rem}
+.ft a,.ft .fl{display:block;color:#a8a8a8;text-decoration:none;background:none;border:0;padding:3px 0;text-align:left;font-weight:600}
+.ft a:hover,.ft .fl:hover{color:#fff}
+.ft .logo{display:inline-block;color:#fff;font-size:1.8rem}
+.ft p{color:#a8a8a8;max-width:42ch;margin:8px 0 0}
+.fb{max-width:1120px;margin:28px auto 0;padding-top:16px;border-top:1px solid #2a2a2a;color:#8c8c8c;font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.bdg{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;border-radius:99px;font:800 .7rem var(--sans);min-width:18px;height:18px;place-items:center;padding:0 4px}
+.mp{min-height:80vh;color:var(--mi);font-family:var(--sans)}
+.mh{position:relative;overflow:hidden;padding:clamp(28px,5vw,64px) clamp(18px,6vw,90px) clamp(34px,5vw,60px)}
+.mh::after{content:"";position:absolute;right:-8%;top:-32%;width:min(48vw,540px);aspect-ratio:1;border-radius:50%;background:var(--soft)}
+.mh>*:not(.mem){position:relative;z-index:1}
+.mem{position:absolute;right:clamp(24px,10vw,150px);top:50%;transform:translateY(-40%);font-size:clamp(4rem,12vw,8rem);z-index:1}
+.mh h1{font-family:var(--mf);font-weight:500;font-size:clamp(3rem,9vw,7rem);letter-spacing:-.02em;margin:36px 0 12px;line-height:.95}
+.bk{color:var(--mi);opacity:.7;text-decoration:none;font-weight:700;font-size:.9rem}
+.mm{display:flex;flex-wrap:wrap;gap:6px 18px;opacity:.75;margin:0 0 26px}
+.mm span+span::before{content:"·";margin-right:18px}
+.mb{border:0;border-radius:99px;padding:13px 28px;font:600 1rem var(--sans);background:var(--ma);color:var(--bt)}
+.mb.o{background:none;border:1.5px solid var(--mi);color:var(--mi)}
+.mr{margin:0 clamp(18px,6vw,90px) 30px;padding:clamp(18px,3vw,32px);background:var(--soft);border-radius:26px}
+.mr h2,.mr h3,.mg h2{font-family:var(--mf);font-weight:500}
+.mg{padding:20px clamp(18px,6vw,90px) 90px}
+.ml{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:6px 56px;margin-top:16px}
+.mi{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:18px 0;border-bottom:1px solid color-mix(in srgb,var(--mi) 16%,transparent);align-items:start}
+.mi h3{font-family:var(--mf);font-weight:500;font-size:1.5rem}
+.mi p{grid-column:1;margin:2px 0 0;opacity:.7;font-size:.95rem}
+.pr{font-family:var(--mf);font-size:1.4rem;text-align:right}
+.act{grid-column:1/-1;margin-top:10px}
+.add{border:1.5px solid var(--ma);color:var(--ma);background:none;border-radius:99px;padding:7px 20px;font-weight:600}.add:hover{background:var(--ma);color:var(--bt)}
+.qs{display:flex;align-items:center;gap:14px}.qs button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--ma);background:none;color:var(--ma);font-size:1.15rem}
+.rowc{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.mchip{border:1.5px solid color-mix(in srgb,var(--mi) 35%,transparent);background:none;color:var(--mi);border-radius:99px;padding:7px 16px;font-weight:600}.mchip.on{background:var(--ma);color:var(--bt);border-color:var(--ma)}.mchip:disabled{opacity:.35;text-decoration:line-through}
+.mr select{width:auto;margin-left:8px;background:var(--mbg);color:var(--mi);border-color:transparent}
+.cg{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:start}
+.ci{display:grid;grid-template-columns:56px 1fr auto auto;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.cie{font-size:2rem;background:var(--card);border:2px solid var(--line);border-radius:16px;width:56px;height:56px;display:grid;place-items:center}
+.ci h3{font-size:1.25rem}
+.cq{display:flex;align-items:center;gap:10px}.cq button{width:32px;height:32px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink);font-size:1.1rem}
+.lp{min-width:64px;text-align:right}
+.sum{position:sticky;top:84px}
+.sl{display:flex;justify-content:space-between;gap:10px;padding:5px 0;color:var(--mut)}
+.sl.t{color:var(--ink);font-weight:800;font-size:1.3rem;border-top:2px dashed var(--line);margin-top:8px;padding-top:12px}
+.done{max-width:560px;margin:0 auto;text-align:center}.done .sl{text-align:left}
+@media (max-width:760px){.cg{grid-template-columns:1fr}.sum{position:static}.ci{grid-template-columns:48px 1fr auto}.lp{grid-column:3}.mem{opacity:.9;top:auto;bottom:10px;transform:none}}
+@media (max-width:760px){.book{grid-template-columns:1fr}.cover{min-height:200px}.pb{grid-template-columns:100px 1fr}.fw{grid-template-columns:1fr}}
+@media (max-width:760px){.hero{grid-template-columns:1fr}nav{grid-template-columns:auto 1fr auto}.links{justify-content:center}.logo{font-size:1.6rem}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -98,6 +155,7 @@ dialog::backdrop{background:rgba(20,8,2,.6);backdrop-filter:blur(5px)}
  <a class="logo" href="#home">nomo<i>.</i></a>
  <div class="links"><a href="#explore">Explore</a><a href="#passport">Passport</a><a href="#community">Community</a></div>
  <div class="right">
+  <a class="ib" id="cb" href="#cart" aria-label="Open cart" style="position:relative;text-decoration:none">🛒<span class="bdg" id="cn" style="display:none">0</span></a>
   <button class="ib" id="th" aria-label="Toggle light or dark theme">🌙</button>
   <button class="ib" id="ub" aria-label="Account menu" aria-haspopup="true">👤</button>
   <div class="menu" id="um"></div>
@@ -127,7 +185,7 @@ dialog::backdrop{background:rgba(20,8,2,.6);backdrop-filter:blur(5px)}
 </div>
 
 <div class="view" id="v-explore">
- <h2 class="t">Explore restaurants</h2><p class="sub">Pick a city, search, and filter by the type of food you feel like.</p>
+ <div class="exh gin"><h2 class="t">What are you craving in Raleigh?</h2><p class="sub">Pick a city, search a dish, or filter by cuisine. Tap any restaurant to open its menu.</p></div>
  <div class="bar"><select id="city" aria-label="City"><option>Raleigh, NC</option><option disabled>Durham (coming soon)</option><option disabled>Charlotte (coming soon)</option></select><input id="q" type="search" placeholder="Search name or dish" aria-label="Search restaurants" style="flex:2"></div>
  <div class="chips" id="chips"></div><div class="grid3" id="rg" style="margin-top:20px"></div>
 </div>
@@ -140,12 +198,20 @@ dialog::backdrop{background:rgba(20,8,2,.6);backdrop-filter:blur(5px)}
 </div>
 
 <div class="view" id="v-settings"></div>
+<div class="view wide" id="v-menu"></div>
+<div class="view" id="v-dash"></div>
+<div class="view" id="v-cart"></div>
 </main>
+<footer class="ft"><div class="fw">
+ <div><a class="logo" href="#home">nomo<i>.</i></a><p>nomo is a product in active development. We keep improving it, and new updates will be released regularly.</p></div>
+ <div><b>Explore nomo</b><a href="#home">About nomo</a><a href="#explore">Explore</a><a href="#passport">Passport</a><a href="#community">Community</a></div>
+ <div><b>Your account</b><button class="fl" data-f="in">Customer login</button><button class="fl" data-f="rest">For restaurants</button><a href="#settings">Settings</a></div>
+</div><div class="fb"><span>© 2026 nomo. All rights reserved.</span><span>Made with appetite in Raleigh, NC</span></div></footer>
 
-<dialog id="ad"><div class="tabs"><button class="chip on" data-m="in">Log in</button><button class="chip" data-m="up">Sign up</button></div>
+
+<dialog id="ad"><div class="tabs" id="rl"><button class="chip on" data-role="c">🍽️ Customer</button><button class="chip" data-role="r">🏪 Restaurant</button></div><div class="tabs" id="mt"><button class="chip on" data-m="in">Log in</button><button class="chip" data-m="up">Sign up</button></div>
  <div class="f2" id="af"></div><p class="err" id="ae" role="alert"></p>
  <div style="display:flex;gap:10px"><button class="btn" id="as">Log in</button><button class="btn o" id="ax">Cancel</button></div></dialog>
-<dialog id="rd"><h3 id="rt"></h3><p id="rs" style="color:var(--mut);margin:4px 0 0"></p><ul class="dm" id="rm"></ul><div style="display:flex;gap:10px"><button class="btn" id="rv">Log a visit</button><button class="btn o" id="rx">Close</button></div></dialog>
 <div class="toast" id="ts" role="status"></div>
 
 <script>
@@ -161,11 +227,35 @@ const R=[
 ["Smoke & Sweet","Southern BBQ","Boylan Heights","$$",4.7,"🍖",[["Pulled Pork Plate",15],["Mac & Cheese",6],["Banana Pudding",6]]],
 ["Dragon Steam","Chinese","Cary Town","$",4.3,"🥟",[["Soup Dumplings",12],["Dan Dan Noodles",13],["Mapo Tofu",14]]]
 ].map((r,i)=>({id:i,n:r[0],c:r[1],a:r[2],p:r[3],s:r[4],e:r[5],m:r[6]}));
+const AD=["212 Fayetteville St","408 Glenwood Ave","1120 Bagwell Ave","301 S Blount St","2010 Clark Ave","4209 Lassiter Mill Rd","1500 Hillsborough St","615 E Davie St","118 S West St","905 Preston Rd"];
+/* one visual theme per restaurant menu: bg, ink, card, accent, accent2, button text, heading font, pattern */
+/* calm menu palettes: page, ink, soft shape, accent, button text, heading font */
+const T=[
+{bg:"#f4ede1",ink:"#3a2e26",soft:"#e6d7c0",acc:"#9c5b3f",bt:"#fff",font:"Cormorant Garamond"},
+{bg:"#f4e3dc",ink:"#43272a",soft:"#ebcfc6",acc:"#a34a4f",bt:"#fff",font:"DM Serif Display"},
+{bg:"#f1efe0",ink:"#2f3b2c",soft:"#dfe3c8",acc:"#c0673a",bt:"#fff",font:"Lora"},
+{bg:"#f1f1ee",ink:"#222222",soft:"#e0e0da",acc:"#b23a3a",bt:"#fff",font:"Jost"},
+{bg:"#efe3d0",ink:"#3b2a1a",soft:"#ddcbab",acc:"#7d6224",bt:"#fff",font:"Lora"},
+{bg:"#e9f0eb",ink:"#1f3a33",soft:"#cfe0d6",acc:"#3f7a68",bt:"#fff",font:"DM Serif Display"},
+{bg:"#f5f1ee",ink:"#2b2a2a",soft:"#e6dcd6",acc:"#c2564b",bt:"#fff",font:"Jost"},
+{bg:"#eaf1f4",ink:"#1f3444",soft:"#d3e2ea",acc:"#3f7c9b",bt:"#fff",font:"Cormorant Garamond"},
+{bg:"#24201d",ink:"#efe3d3",soft:"#3a322c",acc:"#d68a4c",bt:"#24201d",font:"DM Serif Display"},
+{bg:"#2a2229",ink:"#f0e4dd",soft:"#3b303a",acc:"#d9a77c",bt:"#2a2229",font:"Cormorant Garamond"}];
+const DS=[["San Marzano tomato, buffalo mozzarella and fresh basil","Pecorino Romano, black pepper and hand-cut tonnarelli","Espresso-soaked ladyfingers, mascarpone and cocoa"],
+["Slow-cooked chicken in tomato butter gravy with basmati rice","Crisp rice crepe with spiced potato, sambar and chutneys","Chilled yogurt drink blended with ripe mango"],
+["Marinated pork, pineapple and cilantro on corn tortillas","Chicken in a dark chile and chocolate sauce with rice","Cinnamon sugar churros with warm chocolate"],
+["Rich pork broth, chashu, soft egg and scallion","Pan-seared pork dumplings with ponzu","Soft rice cake filled with sweet matcha cream"],
+["Spiced chicken stew with a boiled egg, served with injera","Minced beef with mitmita and spiced butter","Lentils, greens and split peas on injera"],
+["Stir-fried basil, chili and garlic with a fried egg","Coconut curry with Thai basil and bamboo shoots","Sweet coconut sticky rice with ripe mango"],
+["Rice, seasoned vegetables, egg and gochujang","Twice-fried chicken glazed in sweet chili","Aged kimchi stew with tofu and pork"],
+["Spiced lamb, garlic sauce and pickles in warm pita","Hummus, baba ganoush, tabbouleh and olives","Layers of filo, pistachio and honey syrup"],
+["Twelve-hour smoked pork with slaw and pickles","Sharp cheddar and toasted breadcrumbs","Vanilla wafers, bananas and custard"],
+["Delicate dumplings filled with pork and rich broth","Wheat noodles, chili oil, sesame and minced pork","Silken tofu in a spicy fermented bean sauce"]];
 const LV=[["Beginner",1],["Novice",5],["Explorer",10],["Gourmet",15],["Connoisseur",20],["Legend",25]];
 const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 /* Prototype storage only. Replace with FastAPI auth (hashed passwords, JWT) + MongoDB in production. */
-let users=ld("nomo_users",{}),me=ld("nomo_me",null),cuisine="All",cur=null,mode="in",tt;
+let users=ld("nomo_users",{}),rests=ld("nomo_rests",{}),res=ld("nomo_res",[]),cart=ld("nomo_cart",{rid:null,items:{}}),me=ld("nomo_me",null),rme=ld("nomo_rme",null),cuisine="All",cur=null,mode="in",tt;
 let posts=ld("nomo_posts",[
 {id:1,u:"Priya S.",r:"Tiffin Trails",d:"Masala Dosa",t:"Crackly edges and the chutneys are unreal.",by:[],b:14,re:[{u:"Marcus",t:"Adding this to my roadmap."}]},
 {id:2,u:"Marcus T.",r:"Habesha Feast",d:"Kitfo",t:"Ask for it mild first. Worth the detour.",by:[],b:9,re:[]},
@@ -180,54 +270,134 @@ $("th").onclick=()=>theme(document.documentElement.dataset.theme==="dark"?"light
 theme(ld("nomo_theme",matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));
 
 /* account menu */
-function menu(){const u=U();$("um").innerHTML=u?`<p><b>${esc(u.fn)} ${esc(u.ln)}</b><br>${esc(u.email)}</p><button data-a="set">⚙️ Settings</button><button data-a="out">🚪 Sign out</button>`:`<p>Not signed in</p><button data-a="in">Log in</button><button data-a="up">Sign up</button>`}
+function menu(){const u=U(),r=rests[rme];$("um").innerHTML=r?`<p><b>${esc(r.n)}</b><br>Code ${esc(r.code)}</p><button data-a="dash">🏪 Dashboard</button><button data-a="out">🚪 Sign out</button>`:u?`<p><b>${esc(u.fn)} ${esc(u.ln)}</b><br>${esc(u.email)}</p><button data-a="set">⚙️ Settings</button><button data-a="out">🚪 Sign out</button>`:`<p>Not signed in</p><button data-a="in">Log in</button><button data-a="up">Sign up</button>`}
 $("ub").onclick=e=>{e.stopPropagation();menu();$("um").classList.toggle("open")};
 addEventListener("click",()=>$("um").classList.remove("open"));
-$("um").onclick=e=>{const a=e.target.dataset.a;if(!a)return;if(a==="set")location.hash="settings";else if(a==="out"){me=null;sv("nomo_me",null);toast("Signed out");go()}else auth(a)};
+$("um").onclick=e=>{const a=e.target.dataset.a;if(!a)return;if(a==="set")location.hash="settings";else if(a==="dash")location.hash="dash";else if(a==="out"){me=null;rme=null;sv("nomo_me",null);sv("nomo_rme",null);toast("Signed out");go()}else auth(a,"c")};
 
-/* auth */
-function auth(m){mode=m;$("ae").textContent="";document.querySelectorAll(".tabs .chip").forEach(c=>c.classList.toggle("on",c.dataset.m===m));$("as").textContent=m==="in"?"Log in":"Create account";
- const f=(id,l,t="text",x="")=>`<div class="${x}"><label for="${id}">${l}</label><input id="${id}" type="${t}" autocomplete="off"></div>`;
- $("af").innerHTML=(m==="up"?f("fn","First name")+f("ln","Last name")+f("ag","Age","number")+`<div><label for="gn">Gender</label><select id="gn"><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select></div>`+f("co","Country of residence","text","full"):"")+f("em","Email","email","full")+f("pw","Password (6+ characters)","password","full");
- if(!$("ad").open)$("ad").showModal()}
-document.querySelectorAll(".tabs .chip").forEach(c=>c.onclick=()=>auth(c.dataset.m));$("ax").onclick=()=>$("ad").close();
-$("as").onclick=async()=>{const v=id=>($(id)?.value||"").trim(),em=v("em").toLowerCase(),pw=$("pw").value,e=$("ae");
- if(!/^\S+@\S+\.\S+$/.test(em))return e.textContent="Enter a valid email address.";
- if(pw.length<6)return e.textContent="Password needs at least 6 characters.";
- const h=await hash(pw);
+/* auth: customer or restaurant */
+let role="c";
+function auth(m,r){if(r)role=r;mode=m;$("ae").textContent="";
+ document.querySelectorAll("#rl .chip").forEach(c=>c.classList.toggle("on",c.dataset.role===role));
+ document.querySelectorAll("#mt .chip").forEach(c=>c.classList.toggle("on",c.dataset.m===m));
+ $("as").textContent=m==="in"?"Log in":"Create account";
+ const f=(id,l,t="text",x="")=>`<div class="${x}"><label for="${id}">${l}</label><input id="${id}" type="${t}" autocomplete="off"></div>`,pw=f("pw","Password (6+ characters)","password","full");let h;
+ if(role==="c")h=(m==="up"?f("fn","First name")+f("ln","Last name")+f("ag","Age","number")+`<div><label for="gn">Gender</label><select id="gn"><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select></div>`+f("co","Country of residence","text","full"):"")+f("em","Email","email","full")+pw;
+ else h=m==="up"?f("rn","Restaurant name","text","full")+f("rc","Restaurant code (your unique ID)")+`<div><label for="rcu">Cuisine type</label><select id="rcu">${[...new Set(R.map(r=>r.c))].map(c=>`<option>${c}</option>`).join("")}<option>Other</option></select></div>`+f("ra","Address","text","full")+f("rp","Phone","tel")+f("ro","Owner or manager")+f("em","Business email","email","full")+pw:f("rc","Restaurant code","text","full")+pw;
+ $("af").innerHTML=h;if(!$("ad").open)$("ad").showModal()}
+document.querySelectorAll("#rl .chip").forEach(c=>c.onclick=()=>auth(mode,c.dataset.role));
+document.querySelectorAll("#mt .chip").forEach(c=>c.onclick=()=>auth(c.dataset.m));$("ax").onclick=()=>$("ad").close();
+$("as").onclick=async()=>{const v=id=>($(id)?.value||"").trim(),e=$("ae");
+ if($("pw").value.length<6)return e.textContent="Password needs at least 6 characters.";
+ const h=await hash($("pw").value),ok=/^\S+@\S+\.\S+$/;
+ if(role==="r"){const c=v("rc").toUpperCase();if(!c)return e.textContent="Enter your restaurant code.";
+  if(mode==="in"){if(!rests[c]||rests[c].h!==h)return e.textContent="Restaurant code or password is incorrect."}
+  else{const em=v("em").toLowerCase();if(rests[c])return e.textContent="That restaurant code is already registered.";
+   if(!v("rn")||!v("ra")||!v("ro")||!ok.test(em))return e.textContent="Fill in name, address, owner and a valid email.";
+   rests[c]={code:c,n:v("rn"),cu:$("rcu").value,ad:v("ra"),ph:v("rp"),ow:v("ro"),email:em,h};sv("nomo_rests",rests)}
+  rme=c;me=null;sv("nomo_rme",c);sv("nomo_me",null);$("ad").close();toast("Welcome, "+rests[c].n+"!");location.hash="dash";go();return}
+ const em=v("em").toLowerCase();if(!ok.test(em))return e.textContent="Enter a valid email address.";
  if(mode==="in"){if(!users[em]||users[em].h!==h)return e.textContent="Email or password is incorrect."}
  else{if(users[em])return e.textContent="That email already has an account. Log in instead.";
   if(!v("fn")||!v("ln")||!v("co")||!(+v("ag")>0))return e.textContent="Fill in your name, age and country.";
-  users[em]={fn:v("fn"),ln:v("ln"),ag:+v("ag"),gn:$("gn").value,co:v("co"),email:em,h,st:[],no:"NM"+Math.floor(1e6+Math.random()*9e6)};sv("nomo_users",users)}
- me=em;sv("nomo_me",em);$("ad").close();toast("Welcome, "+users[em].fn+"!");go()};
-$("cta").onclick=()=>U()?location.hash="explore":auth("up");
+  users[em]={fn:v("fn"),ln:v("ln"),ag:+v("ag"),gn:$("gn").value,co:v("co"),email:em,h,st:[],no:"NM"+Math.floor(1e6+Math.random()*9e6),iss:new Date().toLocaleDateString()};sv("nomo_users",users)}
+ me=em;rme=null;sv("nomo_me",em);sv("nomo_rme",null);$("ad").close();toast("Welcome, "+users[em].fn+"!");go()};
+$("cta").onclick=()=>U()?location.hash="explore":auth("up","c");
 
 /* explore */
-function explore(){const cs=["All",...new Set(R.map(r=>r.c))],q=$("q").value.toLowerCase(),seen=new Set((U()?.st||[]).map(s=>s.id));
- $("chips").innerHTML=cs.map(c=>`<button class="chip ${c===cuisine?"on":""}" data-c="${c}">${c}</button>`).join("");
+function explore(){const cs=["All",...new Set(R.map(r=>r.c))],q=$("q").value.toLowerCase(),seen=new Set((U()?.st||[]).map(s=>s.id)),em=c=>c==="All"?"🍽️":R.find(r=>r.c===c).e;
+ $("chips").innerHTML=cs.map(c=>`<button class="chip ${c===cuisine?"on":""}" data-c="${c}">${em(c)} ${c}</button>`).join("");
  const f=R.filter(r=>(cuisine==="All"||r.c===cuisine)&&(r.n+r.c+r.a+r.m.map(m=>m[0]).join()).toLowerCase().includes(q));
- $("rg").innerHTML=f.length?f.map(r=>`<button class="card rest" data-id="${r.id}"><div class="em">${r.e}</div><h3>${r.n}</h3><p style="margin:0 0 10px;color:var(--mut)">${r.a} · ${r.p} · ★ ${r.s}</p><span class="tag">${r.c}</span>${seen.has(r.id)?'<span class="tag g">Stamped</span>':""}</button>`).join(""):'<p class="sub">Nothing matches yet. Try another cuisine or clear the search.</p>'}
-$("chips").onclick=e=>{if(e.target.dataset.c){cuisine=e.target.dataset.c;explore()}};$("q").oninput=explore;
-$("rg").onclick=e=>{const b=e.target.closest(".rest");if(!b)return;cur=R[b.dataset.id];$("rt").textContent=cur.e+" "+cur.n;$("rs").textContent=`${cur.c} · ${cur.a}, Raleigh`;$("rm").innerHTML=cur.m.map(m=>`<li><span>${m[0]}</span><b>$${m[1]}</b></li>`).join("");$("rd").showModal()};
-$("rx").onclick=()=>$("rd").close();
-$("rv").onclick=()=>{const u=U();if(!u){$("rd").close();return auth("in")}
- if(u.st.length>=25)return toast("Passport full. You are a Legend!");
- const b=lvl(u.st.length);u.st.push({id:cur.id,n:cur.n,e:cur.e,d:new Date().toLocaleDateString()});sv("nomo_users",users);$("rd").close();
- const a=lvl(u.st.length);toast(a>b?"Level up: "+LV[a][0]+"!":"Stamp added: "+cur.n);explore()};
+ $("rg").innerHTML=f.length?f.map(r=>{const t=T[r.id];return`<button class="card rest" data-id="${r.id}"><div class="rt" style="background:radial-gradient(circle at 70% 30%,${t.soft},${t.bg})">${r.e}</div><h3>${r.n}</h3><p style="margin:0 0 10px;color:var(--mut)">${r.a} · ${r.p} · ★ ${r.s}</p><span class="tag">${r.c}</span>${seen.has(r.id)?'<span class="tag g">Stamped</span>':""}<p style="margin:10px 0 0;font-weight:800;color:var(--red)">View menu</p></button>`}).join(""):'<p class="sub">Nothing matches yet. Try another cuisine or clear the search.</p>'}
+$("chips").onclick=e=>{const b=e.target.closest("[data-c]");if(b){cuisine=b.dataset.c;explore()}};$("q").oninput=explore;
+$("rg").onclick=e=>{const b=e.target.closest(".rest");if(b)location.hash="menu-"+b.dataset.id};
+
+/* menu page: opens as its own page with a theme per restaurant */
+let rsv={open:false,d:0,sz:2,t:null};
+const days=()=>[0,1,2].map(d=>{const x=new Date();x.setDate(x.getDate()+d);return x.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})});
+const slotsFor=(id,d)=>Array.from({length:10},(_,i)=>{const m=1020+i*30,h=Math.floor(m/60);return{t:`${h>12?h-12:h}:${m%60?"30":"00"} PM`,full:(id*7+d*3+i*5)%4===0}});
+function menuPage(){const id=+location.hash.split("-")[1],r=R[id],v=$("v-menu");if(!r){location.hash="explore";return}
+ if(cur!==r){cur=r;rsv={open:false,d:0,sz:2,t:null}}
+ const t=T[id],it=cart.rid===id?cart.items:{},ds=days(),sl=slotsFor(id,rsv.d),has=Object.keys(cart.items).length;
+ v.innerHTML=`<div class="mp" style="--mbg:${t.bg};--mi:${t.ink};--ma:${t.acc};--soft:${t.soft};--bt:${t.bt};--mf:'${t.font}',Georgia,serif;background:radial-gradient(circle at 10% 100%,${t.soft},transparent 42%),${t.bg}">
+ <div class="mh"><a class="bk" href="#explore">← Back to explore</a><div class="mem">${r.e}</div><h1>${r.n}</h1>
+ <div class="mm"><span>${AD[id]}, ${r.a}, Raleigh, NC</span><span>${r.c}</span><span>${r.p}</span><span>★ ${r.s}</span></div>
+ <button class="mb" id="rb">${rsv.open?"Hide time slots":"Reserve a table"}</button>${has?' <a class="mb o" href="#cart" style="text-decoration:none;display:inline-block;margin-left:8px">View cart</a>':""}</div>
+ ${rsv.open?`<div class="mr"><h2 style="font-size:2rem">Reserve a table</h2><div class="rowc">${ds.map((d,i)=>`<button class="mchip ${i===rsv.d?"on":""}" data-d="${i}">${d}</button>`).join("")}</div>
+ <label>Party size <select id="rz">${[1,2,3,4,5,6,8].map(n=>`<option ${n===rsv.sz?"selected":""}>${n}</option>`).join("")}</select></label>
+ <h3 style="margin-top:18px;font-size:1.5rem">Available time slots</h3><div class="rowc">${sl.map(s=>`<button class="mchip ${s.t===rsv.t?"on":""}" ${s.full?"disabled":""} data-t="${s.t}">${s.t}${s.full?" (full)":""}</button>`).join("")}</div><button class="mb" id="rc">Confirm reservation</button></div>`:""}
+ <div class="mg"><h2 style="font-size:2.6rem">Menu</h2><div class="ml">${r.m.map((m,k)=>{const q=it[m[0]]?.q||0;return`<div class="mi"><h3>${m[0]}</h3><span class="pr">$${m[1]}</span><p>${DS[id][k]}</p><div class="act">${q?`<div class="qs"><button data-q="${k}|-1" aria-label="Remove one">−</button><b>${q}</b><button data-q="${k}|1" aria-label="Add one">+</button></div>`:`<button class="add" data-add="${k}">Add to cart</button>`}</div></div>`}).join("")}</div></div></div>`}
+function book(){const u=U();if(!u)return rme?toast("Log in as a customer to reserve a table"):auth("in","c");if(!rsv.t)return toast("Pick a time slot first");
+ res.unshift({id:Date.now(),rn:cur.n,user:me,name:u.fn+" "+u.ln,date:days()[rsv.d],t:rsv.t,sz:rsv.sz});sv("nomo_res",res);toast(`Table for ${rsv.sz} at ${cur.n}, ${rsv.t}`);rsv.t=null;menuPage()}
+
+/* cart */
+const TAX=.0725,FEE=1.99;let tip=.1,done=null;
+const money=n=>"$"+n.toFixed(2);
+const bill=()=>{const sub=Object.values(cart.items).reduce((a,x)=>a+x.p*x.q,0),tax=sub*TAX,tp=sub*tip;return{sub,tax,tp,total:sub+tax+FEE+tp}};
+const cSave=()=>{sv("nomo_cart",cart);const n=Object.values(cart.items).reduce((a,x)=>a+x.q,0),b=$("cn");b.style.display=n?"grid":"none";b.textContent=n};
+function chg(k,d){const m=cur.m[k];if(cart.rid!==cur.id){if(Object.keys(cart.items).length&&!confirm("Your cart has dishes from another restaurant. Start a new cart?"))return;cart={rid:cur.id,items:{}}}
+ const x=cart.items[m[0]]||(cart.items[m[0]]={p:m[1],q:0});x.q+=d;if(x.q<=0)delete cart.items[m[0]];cSave();menuPage()}
+function cq(n,d){const x=cart.items[n];if(!x)return;x.q+=d;if(x.q<=0)delete cart.items[n];if(!Object.keys(cart.items).length)cart.rid=null;cSave();cartPage()}
+function cartPage(){const v=$("v-cart"),it=Object.entries(cart.items);
+ if(done){const d=done;v.innerHTML=`<div class="card done"><div style="font-size:4rem">✅</div><h2 class="t" style="font-size:3rem">Order placed</h2><p class="sub" style="margin:10px auto 20px">Order <b>#${d.no}</b> from <b>${esc(d.r)}</b> is being prepared and will be ready in about 25 minutes.${d.stamped?" A new stamp was added to your passport.":""}</p>
+ ${d.items.map(i=>`<div class="sl"><span>${i[1]} × ${esc(i[0])}</span><span>${money(i[1]*i[2])}</span></div>`).join("")}<div class="sl t"><span>Total paid</span><span>${money(d.total)}</span></div>
+ <p style="margin-top:22px"><a class="btn" href="#passport" style="text-decoration:none;display:inline-block">View my passport</a> <a class="btn o" href="#explore" style="text-decoration:none;display:inline-block">Keep exploring</a></p></div>`;return}
+ if(!it.length){v.innerHTML=`<h2 class="t">Your cart</h2><p class="sub">Your cart is empty. Open a restaurant menu and add dishes.</p><a class="btn" href="#explore" style="text-decoration:none;display:inline-block">Browse restaurants</a>`;return}
+ const r=R[cart.rid],b=bill();
+ v.innerHTML=`<h2 class="t">Your cart</h2><p class="sub">From <b>${esc(r.n)}</b>, ${AD[r.id]}, ${r.a}</p><div class="cg"><div>
+ ${it.map(([n,x])=>`<div class="ci"><div class="cie">${r.e}</div><div><h3>${esc(n)}</h3><small style="color:var(--mut)">${money(x.p)} each</small></div><div class="cq"><button data-cq="${esc(n)}|-1" aria-label="Remove one">−</button><b>${x.q}</b><button data-cq="${esc(n)}|1" aria-label="Add one">+</button></div><b class="lp">${money(x.p*x.q)}</b></div>`).join("")}
+ <p style="margin-top:16px"><a href="#menu-${r.id}" style="color:var(--red);font-weight:800">+ Add more from ${esc(r.n)}</a></p></div>
+ <aside class="card sum"><h3 style="margin-bottom:12px">Order summary</h3>
+ ${it.map(([n,x])=>`<div class="sl"><span>${x.q} × ${esc(n)}</span><span>${money(x.p*x.q)}</span></div>`).join("")}
+ <div class="sl" style="border-top:1px solid var(--line);margin-top:8px;padding-top:10px"><span>Subtotal</span><span>${money(b.sub)}</span></div>
+ <div class="sl"><span>Sales tax (7.25%)</span><span>${money(b.tax)}</span></div><div class="sl"><span>Service fee</span><span>${money(FEE)}</span></div>
+ <div class="sl"><span>Tip</span><span>${money(b.tp)}</span></div>
+ <div class="rowc" style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">${[0,.1,.15,.2].map(p=>`<button class="chip ${p===tip?"on":""}" data-tip="${p}">${p?p*100+"%":"No tip"}</button>`).join("")}</div>
+ <div class="sl t"><span>Total</span><span>${money(b.total)}</span></div>
+ <button class="btn" id="po" style="width:100%;margin-top:14px">Place order</button><p style="color:var(--mut);font-size:.8rem;margin:10px 0 0">Demo only: no real payment is taken.</p></aside></div>`}
+function order(){const u=U();if(!u)return rme?toast("Log in as a customer to order"):auth("in","c");
+ const r=R[cart.rid],b=bill(),stamped=u.st.length<25,bf=lvl(u.st.length);
+ done={no:"NM-"+Math.floor(1e4+Math.random()*9e4),r:r.n,items:Object.entries(cart.items).map(([n,x])=>[n,x.q,x.p]),total:b.total,stamped};
+ if(stamped){u.st.push({id:r.id,n:r.n,e:r.e,d:new Date().toLocaleDateString()});sv("nomo_users",users);const a=lvl(u.st.length);if(a>bf)toast("Level up: "+LV[a][0]+"!")}
+ cart={rid:null,items:{}};cSave();cartPage();scrollTo(0,0)}
+document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;
+ if(t.id==="rb"){rsv.open=!rsv.open;menuPage()}
+ else if(t.dataset.d!==undefined){rsv.d=+t.dataset.d;rsv.t=null;menuPage()}
+ else if(t.dataset.t){rsv.t=t.dataset.t;menuPage()}
+ else if(t.id==="rc")book();
+ else if(t.dataset.add!==undefined)chg(+t.dataset.add,1);
+ else if(t.dataset.q){const[k,d]=t.dataset.q.split("|");chg(+k,+d)}
+ else if(t.dataset.cq){const i=t.dataset.cq.lastIndexOf("|");cq(t.dataset.cq.slice(0,i),+t.dataset.cq.slice(i+1))}
+ else if(t.dataset.tip!==undefined){tip=+t.dataset.tip;cartPage()}
+ else if(t.id==="po")order();
+ else if(t.dataset.f)t.dataset.f==="rest"?auth("up","r"):auth("in","c")});
+document.addEventListener("change",e=>{if(e.target.id==="rz")rsv.sz=+e.target.value});
+
+/* restaurant dashboard */
+function dash(){const r=rests[rme],v=$("v-dash");
+ if(!r){v.innerHTML=`<h2 class="t">Restaurant dashboard</h2><p class="sub">Log in with your restaurant code to see your details and reservations.</p><button class="btn" onclick="auth('in','r')">Restaurant log in</button>`;return}
+ const f=(id,l,val)=>`<div><label for="d${id}">${l}</label><input id="d${id}" value="${esc(val)}"></div>`,rs=res.filter(x=>x.rn.toLowerCase()===r.n.toLowerCase());
+ v.innerHTML=`<h2 class="t">${esc(r.n)}</h2><p class="sub">Restaurant code ${esc(r.code)} · ${esc(r.email)}. Menu management is coming in a future update.</p>
+ <div class="card"><div class="f2">${f("n","Restaurant name",r.n)}${f("cu","Cuisine type",r.cu)}${f("ad","Address",r.ad)}${f("ph","Phone",r.ph)}${f("ow","Owner or manager",r.ow)}</div><p style="margin:16px 0 0"><button class="btn" id="ds">Save changes</button></p></div>
+ <h2 class="t" style="font-size:2.2rem;margin-top:40px">Reservations</h2>${rs.length?rs.map(x=>`<div class="rv"><b>${esc(x.name)}</b><span>${esc(x.date)}, ${esc(x.t)} · party of ${x.sz}</span></div>`).join(""):'<p class="sub">No reservations yet. Bookings made under your restaurant name appear here.</p>'}`;
+ $("ds").onclick=()=>{const g=id=>$("d"+id).value.trim();if(!g("n")||!g("ad"))return toast("Name and address are required");Object.assign(r,{n:g("n"),cu:g("cu"),ad:g("ad"),ph:g("ph"),ow:g("ow")});sv("nomo_rests",rests);toast("Changes saved");dash()}}
 
 /* passport */
 function passport(){const u=U(),v=$("v-passport");
- if(!u){v.innerHTML=`<h2 class="t">Your Food Passport</h2><p class="sub">Log in or sign up to receive your passport and start collecting stamps.</p><button class="btn" onclick="auth('up')">Get my passport</button>`;return}
- const n=u.st.length,tried=new Set(u.st.map(s=>s.id)).size,i=lvl(n),nx=LV[i+1],nm=s=>s.toUpperCase().replace(/[^A-Z]/g,"");
+ if(!u){v.innerHTML=`<h2 class="t">Your Food Passport</h2><p class="sub">Log in or sign up as a customer to receive your passport and start collecting stamps.</p><button class="btn" onclick="auth('up','c')">Get my passport</button>`;return}
+ const n=u.st.length,tried=new Set(u.st.map(s=>s.id)).size,i=lvl(n),nx=LV[i+1],nm=s=>s.toUpperCase().replace(/[^A-Z]/g,""),inks=["#7a1424","#1d3d7a","#b5541a","#4a2c6b"],my=res.filter(x=>x.user===me);
  v.innerHTML=`<h2 class="t">Your Food Passport</h2><p class="sub">Your identity as a food explorer.</p>
- <div class="pp"><div class="ph">${esc(u.fn[0])}${esc(u.ln[0])}</div><div><small>NOMO WORLD PASSPORT</small><h3 style="font-size:2rem">${esc(u.fn)} ${esc(u.ln)}</h3>
- <div class="d"><div><small>SURNAME</small><b>${esc(u.ln)}</b></div><div><small>FIRST NAME</small><b>${esc(u.fn)}</b></div><div><small>AGE</small><b>${u.ag}</b></div><div><small>GENDER</small><b>${esc(u.gn)}</b></div><div><small>COUNTRY OF RESIDENCE</small><b>${esc(u.co)}</b></div><div><small>RESTAURANTS TRIED</small><b>${tried}</b></div><div><small>PASSPORT NO.</small><b>${u.no}</b></div><div><small>LEVEL</small><b>${i<0?"Newcomer":LV[i][0]}</b></div></div></div>
- <div class="mrz">P&lt;NMO${nm(u.ln)}&lt;&lt;${nm(u.fn)}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>${u.no}&lt;NMO${String(u.ag).padStart(3,"0")}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div></div>
+ <div class="book"><div class="cover"><div><span class="cm">🍴</span><br><small>NOMO</small><h3>WORLD<br>FOOD<br>PASSPORT</h3><small>✦ ✦ ✦</small></div></div>
+ <div class="page"><div class="ph2"><b>NOMO WORLD PASSPORT</b><span>Type P · Code NMO</span></div>
+ <div class="pb"><div class="pic">${esc(u.fn[0])}${esc(u.ln[0])}</div><div class="pf">
+ <div><small>SURNAME</small><b>${esc(u.ln)}</b></div><div><small>GIVEN NAMES</small><b>${esc(u.fn)}</b></div><div><small>AGE</small><b>${u.age??u.ag}</b></div><div><small>SEX</small><b>${esc(u.gn)}</b></div>
+ <div><small>COUNTRY OF RESIDENCE</small><b>${esc(u.co)}</b></div><div><small>RESTAURANTS TRIED</small><b>${tried}</b></div><div><small>PASSPORT NO.</small><b>${u.no}</b></div><div><small>DATE OF ISSUE</small><b>${esc(u.iss||"2026")}</b></div><div><small>LEVEL</small><b>${i<0?"Newcomer":LV[i][0]}</b></div></div></div>
+ <div class="mrz2">P&lt;NMO${nm(u.ln)}&lt;&lt;${nm(u.fn)}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>${u.no}&lt;NMO${String(u.ag).padStart(3,"0")}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div><div class="seal">VALID</div></div></div>
  <h2 class="t" style="margin-top:50px;font-size:2.4rem">Stamps collected</h2>
- <div class="stamps">${Array.from({length:25},(_,k)=>{const s=u.st[k];return s?`<div class="slot stamp" title="${esc(s.d)}" style="transform:rotate(${k*37%24-12}deg)"><span><big>${s.e}</big>${esc(s.n)}</span></div>`:`<div class="slot">${k+1}</div>`}).join("")}</div>
+ <div class="visa"><div class="stamps">${Array.from({length:25},(_,k)=>{const s=u.st[k],c=inks[k%4];return s?`<div class="slot stamp" title="${esc(s.d)}" style="color:${c};border-color:${c};transform:rotate(${k*37%24-12}deg)"><span><big>${s.e}</big>${esc(s.n)}</span></div>`:`<div class="slot">${k+1}</div>`}).join("")}</div></div>
  <h2 class="t" style="margin-top:50px;font-size:2.4rem">Food Roadmap</h2><p class="sub">${nx?`${nx[1]-n} more stamp${nx[1]-n>1?"s":""} to reach ${nx[0]}.`:"You completed the expedition."}</p>
- <div class="prog"><i style="width:${n/25*100}%"></i></div>
- <div class="lv">${LV.map((l,k)=>`<div class="${k<i?"done":k===i?"now":""}"><b>${l[0]}</b><br><small>${l[1]} stamps</small></div>`).join("")}</div>`}
+ <div class="prog"><i style="width:${n/25*100}%"></i></div><div class="lv">${LV.map((l,k)=>`<div class="${k<i?"done":k===i?"now":""}"><b>${l[0]}</b><br><small>${l[1]} stamps</small></div>`).join("")}</div>
+ <h2 class="t" style="margin-top:50px;font-size:2.4rem">Table reservations</h2>${my.length?my.map(x=>`<div class="rv"><b>${esc(x.rn)}</b><span>${esc(x.date)}, ${esc(x.t)} · party of ${x.sz}</span></div>`).join(""):'<p class="sub">No reservations yet. Open a restaurant menu and tap Reserve a table.</p>'}`}
 
 /* community */
 function community(){const u=U();
@@ -245,9 +415,10 @@ function settings(){const u=U(),v=$("v-settings");if(!u){v.innerHTML=`<h2 class=
  $("ss").onclick=()=>{const g=id=>$("s"+id).value.trim();if(!g("fn")||!g("ln")||!g("co")||!(+g("ag")>0))return toast("Fill in every field");Object.assign(u,{fn:g("fn"),ln:g("ln"),ag:+g("ag"),gn:$("sgn").value,co:g("co")});sv("nomo_users",users);toast("Changes saved")}}
 
 /* router */
-function go(){const h=location.hash.slice(1)||"home";document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+h));
- document.querySelectorAll(".links a").forEach(a=>a.classList.toggle("on",a.hash==="#"+h));
- ({explore,passport,community,settings}[h]||(()=>{}))();scrollTo(0,0)}
+function go(){const raw=location.hash.slice(1)||"home",h=raw.startsWith("menu-")?"menu":raw;
+ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+h));
+ document.querySelectorAll(".links a").forEach(a=>a.classList.toggle("on",a.hash==="#"+h||(h==="menu"&&a.hash==="#explore")));
+ if(h!=="cart")done=null;({explore,passport,community,settings,menu:menuPage,dash,cart:cartPage}[h]||(()=>{}))();scrollTo(0,0);cSave()}
 addEventListener("hashchange",go);
 
 /* scroll-driven food ring */
