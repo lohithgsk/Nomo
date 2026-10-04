@@ -11,7 +11,7 @@ const R=[
 ["Smoke & Sweet","Southern BBQ","Boylan Heights","$$",4.7,"🍖",[["Pulled Pork Plate",15],["Mac & Cheese",6],["Banana Pudding",6]]],
 ["Dragon Steam","Chinese","Cary Town","$",4.3,"🥟",[["Soup Dumplings",12],["Dan Dan Noodles",13],["Mapo Tofu",14]]]
 ].map((r,i)=>({id:i,n:r[0],c:r[1],a:r[2],p:r[3],s:r[4],e:r[5],m:r[6]}));
-const AD=["212 Fayetteville St","408 Glenwood Ave","1120 Bagwell Ave","301 S Blount St","2010 Clark Ave","4209 Lassiter Mill Rd","1500 Hillsborough St","615 E Davie St","118 S West St","905 Preston Rd"];
+const AD=["212 Fayetteville St","408 Glenwood Ave","1120 Bagwell Ave","301 S Blount St","2010 Clark Ave","4209 Lassiter Mill Rd","1500 Hillsborough St","615 E Davie St","118 S West St","905 Preston Rd","710 W Main St","916 Broad St","1423 S Tryon St","401 W 9th St"];
 /* one visual theme per restaurant menu: bg, ink, card, accent, accent2, button text, heading font, pattern */
 /* calm menu palettes: page, ink, soft shape, accent, button text, heading font */
 const T=[
@@ -35,11 +35,84 @@ const DS=[["San Marzano tomato, buffalo mozzarella and fresh basil","Pecorino Ro
 ["Spiced lamb, garlic sauce and pickles in warm pita","Hummus, baba ganoush, tabbouleh and olives","Layers of filo, pistachio and honey syrup"],
 ["Twelve-hour smoked pork with slaw and pickles","Sharp cheddar and toasted breadcrumbs","Vanilla wafers, bananas and custard"],
 ["Delicate dumplings filled with pork and rich broth","Wheat noodles, chili oil, sesame and minced pork","Silken tofu in a spicy fermented bean sauce"]];
+const VEG=new Set(["Margherita Pizza","Cacio e Pepe","Tiramisu","Masala Dosa","Mango Lassi","Churros","Matcha Mochi","Veggie Combo","Mango Sticky Rice","Bibimbap","Mezze Board","Baklava","Mac & Cheese","Banana Pudding"]);
+const EXTRAS=[
+ ["Seasonal House Salad",9,"Market greens, cucumber, tomato and house vinaigrette",true],
+ ["Crispy Potatoes",7,"Golden potatoes with herbs and a house dipping sauce",true],
+ ["Steamed Rice",5,"Fluffy rice finished with fresh herbs",true],
+ ["Roasted Seasonal Vegetables",8,"Market vegetables roasted with olive oil and herbs",true],
+ ["Soup of the Day",8,"A comforting seasonal soup made fresh daily",true],
+ ["Fresh Lemonade",4,"Fresh-squeezed lemons with a hint of sweetness",true],
+ ["Chocolate Cake",8,"Rich chocolate cake with a silky cocoa finish",true]
+];
+const MORE=[
+ {n:"Bull City Kitchen",c:"Southern",a:"Downtown",p:"$$",s:4.7,e:"🍗",city:"Durham",m:[
+  ["Smoked Chicken Plate",17,"Smoked chicken, seasonal sides and house sauce",false],
+  ["Carolina Pulled Pork",16,"Slow-smoked pork with slaw and tangy vinegar sauce",false],
+  ["Pimento Cheese Toast",11,"Sharp pimento cheese on toasted sourdough",true]
+ ]},
+ {n:"Ninth Street Noodle Co.",c:"Vietnamese",a:"Ninth Street",p:"$",s:4.8,e:"🍜",city:"Durham",m:[
+  ["Beef Pho",16,"Rice noodles in slow-simmered beef broth with herbs",false],
+  ["Lemongrass Tofu Bowl",14,"Crisp tofu, vermicelli, greens and lemongrass sauce",true],
+  ["Fresh Summer Rolls",9,"Rice-paper rolls with herbs, vegetables and peanut dip",true]
+ ]},
+ {n:"Queen City Arepas",c:"Venezuelan",a:"South End",p:"$",s:4.8,e:"🫓",city:"Charlotte",m:[
+  ["Reina Pepiada Arepa",14,"Corn cake filled with chicken, avocado and lime",false],
+  ["Black Bean & Plantain Arepa",13,"Sweet plantain, black beans and avocado crema",true],
+  ["Yuca Fries",7,"Crisp cassava fries with cilantro-lime sauce",true]
+ ]},
+ {n:"Rail Trail Tacos",c:"Mexican",a:"South End",p:"$",s:4.6,e:"🌮",city:"Charlotte",m:[
+  ["Carne Asada Tacos",15,"Grilled steak, salsa verde and warm corn tortillas",false],
+  ["Mushroom Tinga Tacos",13,"Smoky mushrooms, cabbage and avocado",true],
+  ["Street Corn",7,"Grilled corn with lime, cotija and chile",true]
+ ]}
+];
+MORE.forEach((r,i)=>{r.id=10+i;R.push(r)});
+R.forEach((r,i)=>{
+ r.city=r.city||"Raleigh";
+ r.m=[...r.m.map(m=>[m[0],m[1],m[2]||DS[i]?.[r.m.indexOf(m)]||"A house favorite made with fresh ingredients",m[3]??VEG.has(m[0])]),...EXTRAS];
+});
+const SCENES=[
+ ["wood-fired pizzeria","A little Italy, right around the corner.","Hand-stretched dough, blistered crusts and long-table evenings.","photo-1550966871-3ed3cdb5ed0c"],
+ ["Indian supper club","Big-hearted Indian cooking.","Slow-simmered favorites, fragrant spices and a little something sweet.","photo-1517248135467-4c7edcad34c4"],
+ ["neighborhood taqueria","A bright, lively taqueria.","Smoky chiles, fresh tortillas and the best kind of messy lunch.","photo-1559339352-11d035aa65de"],
+ ["late-night ramen bar","A bowl worth slowing down for.","Long-simmered broth, springy noodles and a seat at the counter.","photo-1514933651103-005eec06c04b"],
+ ["Ethiopian sharing table","Gather close. Pass the injera.","A generous spread of slow-cooked stews, lentils and warm spice.","photo-1414235077428-338989a2e8c0"],
+ ["Bangkok street-food kitchen","A little heat, a lot of flavor.","Fresh herbs, wok-fired favorites and sweet mango to finish.","photo-1552566626-52f8b828add9"],
+ ["Korean comfort kitchen","Comfort food with a Korean kick.","Sizzling rice bowls, deep savory flavor and a little crunch.","photo-1514933651103-005eec06c04b"],
+ ["Mediterranean mezze house","Make room for one more plate.","Olive oil, bright herbs, warm bread and a table made for sharing.","photo-1414235077428-338989a2e8c0"],
+ ["Carolina smokehouse","Low and slow, Carolina style.","Smoky favorites, familiar sides and something sweet after.","photo-1555396273-367ea4eb4db5"],
+ ["Chinese dumpling house","Folded by hand. Made to share.","Steamy baskets, silky noodles and the comfort of a familiar table.","photo-1552566626-52f8b828add9"],
+ ["Durham smokehouse","Bull City barbecue, low and slow.","Smoked favorites, Carolina sides and room to stay a while.","photo-1555396273-367ea4eb4db5"],
+ ["Ninth Street noodle shop","A warm bowl on Ninth Street.","Bright herbs, fragrant broth and noodles made for a long lunch.","photo-1514933651103-005eec06c04b"],
+ ["Queen City arepera","Venezuelan comfort, made by hand.","Golden corn cakes, slow-cooked fillings and a little taste of home.","photo-1552566626-52f8b828add9"],
+ ["South End taco room","Tacos, salsa and one more round.","Fresh tortillas, smoky fillings and bright, punchy salsas.","photo-1559339352-11d035aa65de"]
+].map(([type,headline,story,photo])=>({type,headline,story,photo}));
+const FOOD_PHOTOS={
+ pizza:["photo-1574071318508-1cdbab80d002","photo-1604382355076-af4b0eb60143","photo-1593560708920-61dd98c46a4e"],
+ pasta:["photo-1551183053-bf91a1d81141","photo-1546549032-9571cd6b27df","photo-1513104890138-7c749659a591"],
+ curry:["photo-1603894584373-5ac82b2ae398","photo-1567337710282-00832b415979","photo-1585937421612-70a008356fbe"],
+ taco:["photo-1565299507177-b0ac66763828","photo-1593560708920-61dd98c46a4e","photo-1565299624946-b28f40a0ae38"],
+ noodle:["photo-1555126634-323283e090fa","photo-1569718212165-3a8278d5f624","photo-1547592180-85f173990554"],
+ dumpling:["photo-1563245372-f21724e3856d","photo-1601050690597-df0568f70950","photo-1555126634-323283e090fa"],
+ greens:["photo-1512621776951-a57141f2eefd","photo-1540189549336-e6e99c3679fe","photo-1546069901-ba9599a7e63c"],
+ bbq:["photo-1544025162-d76694265947","photo-1555939594-58d7cb561ad1","photo-1529692236671-f1f6cf9683ba"],
+ dessert:["photo-1578985545062-69928b1d9587","photo-1488477181946-6428a0291777","photo-1565958011703-44f9829ba187"],
+ drink:["photo-1544145945-f90425340c7e","photo-1488477181946-6428a0291777","photo-1565958011703-44f9829ba187"]
+};
+const FOOD_STYLE=["pizza","curry","taco","noodle","greens","noodle","dumpling","greens","bbq","dumpling","bbq","noodle","taco","taco"];
+R.forEach((r,i)=>{r.scene=SCENES[i];r.foodStyle=FOOD_STYLE[i]});
+function imageUrl(id,width){return`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=82`}
+function dishPhoto(r,dish,index){
+ const n=dish.toLowerCase(),group=/cake|tiramisu|churro|baklava|pudding|mochi|dessert|chocolate|sweet|sticky rice/.test(n)?"dessert":/lassi|lemonade|drink|smoothie/.test(n)?"drink":/pizza|margherita/.test(n)?"pizza":/pasta|cacio|tonnarelli/.test(n)?"pasta":/taco|arepa|plantain|corn cake/.test(n)?"taco":/noodle|pho|ramen|vermicelli/.test(n)?"noodle":/curry|thali|dosa|lentil|injera|stew|masala|pad kra pao/.test(n)?"curry":/dumpling|gyoza|roll|wonton|mapo tofu/.test(n)?"dumpling":/salad|vegetable|veggie|greens|mezze|hummus|falafel|tofu|rice|potato|soup|toast|cheese/.test(n)?"greens":/pork|chicken|beef|lamb|steak|meat|smoked|pulled|carne|kitfo|doro/.test(n)?"bbq":r.foodStyle;
+ const photos=FOOD_PHOTOS[group]||FOOD_PHOTOS[r.foodStyle];
+ return imageUrl(photos[(index+(r.id%photos.length))%photos.length],520)
+}
 const LV=[["Beginner",1],["Novice",5],["Explorer",10],["Gourmet",15],["Connoisseur",20],["Legend",25]];
 const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 /* Prototype storage only. Replace with FastAPI auth (hashed passwords, JWT) + MongoDB in production. */
-let users=ld("nomo_users",{}),rests=ld("nomo_rests",{}),res=ld("nomo_res",[]),cart=ld("nomo_cart",{rid:null,items:{}}),me=ld("nomo_me",null),rme=ld("nomo_rme",null),cuisine="All",cur=null,mode="in",tt;
+let users=ld("nomo_users",{}),rests=ld("nomo_rests",{}),res=ld("nomo_res",[]),cart=ld("nomo_cart",{rid:null,items:{}}),me=ld("nomo_me",null),rme=ld("nomo_rme",null),cuisine="All",city="All",cur=null,mode="in",tt;
 let posts=ld("nomo_posts",[
 {id:1,u:"Priya S.",r:"Tiffin Trails",d:"Masala Dosa",t:"Crackly edges and the chutneys are unreal.",by:[],b:14,re:[{u:"Marcus",t:"Adding this to my roadmap."}]},
 {id:2,u:"Marcus T.",r:"Habesha Feast",d:"Kitfo",t:"Ask for it mild first. Worth the detour.",by:[],b:9,re:[]},
@@ -50,7 +123,7 @@ async function hash(s){try{const b=await crypto.subtle.digest("SHA-256",new Text
 
 /* theme */
 function theme(t){document.documentElement.dataset.theme=t;$("th").textContent=t==="dark"?"☀️":"🌙";sv("nomo_theme",t)}
-$("th").onclick=()=>theme(document.documentElement.dataset.theme==="dark"?"light":"dark");
+$("th").onclick=()=>{theme(document.documentElement.dataset.theme==="dark"?"light":"dark");if($("v-menu")?.firstElementChild)menuPage();if($("v-explore"))explore()};
 theme(ld("nomo_theme",matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));
 
 /* account menu */
@@ -91,26 +164,36 @@ $("cta")?.addEventListener("click",()=>U()?location.href="explore.html":auth("up
 /* explore */
 function explore(){const cs=["All",...new Set(R.map(r=>r.c))],q=$("q").value.toLowerCase(),seen=new Set((U()?.st||[]).map(s=>s.id)),em=c=>c==="All"?"🍽️":R.find(r=>r.c===c).e;
  $("chips").innerHTML=cs.map(c=>`<button class="chip ${c===cuisine?"on":""}" data-c="${c}">${em(c)} ${c}</button>`).join("");
- const f=R.filter(r=>(cuisine==="All"||r.c===cuisine)&&(r.n+r.c+r.a+r.m.map(m=>m[0]).join()).toLowerCase().includes(q));
- $("rg").innerHTML=f.length?f.map(r=>{const t=T[r.id];return`<button class="card rest" data-id="${r.id}"><div class="rt" style="background:radial-gradient(circle at 70% 30%,${t.soft},${t.bg})">${r.e}</div><h3>${r.n}</h3><p style="margin:0 0 10px;color:var(--mut)">${r.a} · ${r.p} · ★ ${r.s}</p><span class="tag">${r.c}</span>${seen.has(r.id)?'<span class="tag g">Stamped</span>':""}<p style="margin:10px 0 0;font-weight:800;color:var(--red)">View menu</p></button>`}).join(""):'<p class="sub">Nothing matches yet. Try another cuisine or clear the search.</p>'}
-$("chips")?.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(b){cuisine=b.dataset.c;explore()}});if($("q"))$("q").oninput=explore;
-$("rg")?.addEventListener("click",e=>{const b=e.target.closest(".rest");if(b)location.href="menu.html?id="+b.dataset.id});
+const f=R.filter(r=>(city==="All"||r.city===city)&&(cuisine==="All"||r.c===cuisine)&&(r.n+r.c+r.a+r.city+r.m.map(m=>m[0]).join()).toLowerCase().includes(q));
+$("rg").innerHTML=f.length?f.map(r=>{const t=T[r.id%T.length],tile=document.documentElement.dataset.theme==="dark"?"radial-gradient(circle at 70% 30%,#3a483d,#273129)":`radial-gradient(circle at 70% 30%,${t.soft},${t.bg})`;return`<button class="card rest" data-id="${r.id}"><div class="rt" style="background:${tile}">${r.e}</div><h3>${r.n}</h3><p class="rest-meta">${r.a} · ${r.city}, NC · ${r.p} · ★ ${r.s}</p><span class="tag">${r.c}</span>${r.m.some(m=>m[3])?'<span class="tag g">Veg options</span>':""}${seen.has(r.id)?'<span class="tag g">Stamped</span>':""}<p class="menu-link">View menu · ${r.m.length} dishes</p></button>`}).join(""):'<p class="sub">Nothing matches yet. Try another city, cuisine or search.</p>';
+$("chips").onclick=e=>{const b=e.target.closest("[data-c]");if(b){cuisine=b.dataset.c;explore()}};
+$("city").onchange=()=>{city=$("city").value;explore()};
+$("q").oninput=explore;
+$("rg").onclick=e=>{const b=e.target.closest(".rest");if(b)location.href="menu.html?id="+b.dataset.id};
+}
 
 /* menu page: opens as its own page with a theme per restaurant */
-let rsv={open:false,d:0,sz:2,t:null};
+let rsv={open:false,d:0,sz:2,t:null},menuVegOnly=new URLSearchParams(location.search).get("veg")==="1";
 const days=()=>[0,1,2].map(d=>{const x=new Date();x.setDate(x.getDate()+d);return x.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"})});
 const slotsFor=(id,d)=>Array.from({length:10},(_,i)=>{const m=1020+i*30,h=Math.floor(m/60);return{t:`${h>12?h-12:h}:${m%60?"30":"00"} PM`,full:(id*7+d*3+i*5)%4===0}});
 function menuPage(){const id=+new URLSearchParams(location.search).get("id"),r=R[id],v=$("v-menu");if(!r){location.href="explore.html";return}
  if(cur!==r){cur=r;rsv={open:false,d:0,sz:2,t:null}}
- const t=T[id],it=cart.rid===id?cart.items:{},ds=days(),sl=slotsFor(id,rsv.d),has=Object.keys(cart.items).length;
- v.innerHTML=`<div class="mp" style="--mbg:${t.bg};--mi:${t.ink};--ma:${t.acc};--soft:${t.soft};--bt:${t.bt};--mf:'${t.font}',Georgia,serif;background:radial-gradient(circle at 10% 100%,${t.soft},transparent 42%),${t.bg}">
- <div class="mh"><a class="bk" href="explore.html">← Back to explore</a><div class="mem">${r.e}</div><h1>${r.n}</h1>
- <div class="mm"><span>${AD[id]}, ${r.a}, Raleigh, NC</span><span>${r.c}</span><span>${r.p}</span><span>★ ${r.s}</span></div>
- <button class="mb" id="rb">${rsv.open?"Hide time slots":"Reserve a table"}</button>${has?' <a class="mb o" href="cart.html" style="text-decoration:none;display:inline-block;margin-left:8px">View cart</a>':""}</div>
+ const base=T[id%T.length],t=document.documentElement.dataset.theme==="dark"?{...base,bg:"#121b17",ink:"#edf4ed",soft:"#26382f",bt:"#111916"}:base,it=cart.rid===id?cart.items:{},ds=days(),sl=slotsFor(id,rsv.d),has=Object.keys(cart.items).length,scene=r.scene;
+ v.innerHTML=`<div class="mp" data-scene="${r.foodStyle}" style="--mbg:${t.bg};--mi:${t.ink};--ma:${t.acc};--soft:${t.soft};--bt:${t.bt};--mf:'${t.font}',Georgia,serif;background:radial-gradient(circle at 10% 100%,${t.soft},transparent 42%),${t.bg}">
+ <section class="restaurant-hero">
+  <img class="restaurant-photo" src="${imageUrl(scene.photo,1800)}" alt="Atmospheric dining room for the ${esc(scene.type)} at ${esc(r.n)}" fetchpriority="high">
+  <div class="restaurant-shade"></div>
+  <div class="restaurant-hero-copy"><a class="hero-back" href="explore.html">← All restaurants</a><span class="restaurant-type">${esc(scene.type)}</span><h1>${esc(r.n)}</h1><p class="restaurant-story">${esc(scene.headline)}</p><p class="restaurant-intro">${esc(scene.story)}</p>
+   <div class="mm"><span>${esc(AD[id])}, ${esc(r.a)}, ${esc(r.city)}, NC</span><span>${esc(r.c)}</span><span>${esc(r.p)}</span><span>★ ${r.s}</span></div>
+   <div class="restaurant-actions"><button class="mb" id="rb">${rsv.open?"Hide time slots":"Reserve a table"}</button>${has?' <a class="mb o" href="cart.html">View cart</a>':""}</div>
+  </div><div class="restaurant-mark" aria-hidden="true">${r.e}</div>
+ </section>
  ${rsv.open?`<div class="mr"><h2 style="font-size:2rem">Reserve a table</h2><div class="rowc">${ds.map((d,i)=>`<button class="mchip ${i===rsv.d?"on":""}" data-d="${i}">${d}</button>`).join("")}</div>
  <label>Party size <select id="rz">${[1,2,3,4,5,6,8].map(n=>`<option ${n===rsv.sz?"selected":""}>${n}</option>`).join("")}</select></label>
  <h3 style="margin-top:18px;font-size:1.5rem">Available time slots</h3><div class="rowc">${sl.map(s=>`<button class="mchip ${s.t===rsv.t?"on":""}" ${s.full?"disabled":""} data-t="${s.t}">${s.t}${s.full?" (full)":""}</button>`).join("")}</div><button class="mb" id="rc">Confirm reservation</button></div>`:""}
- <div class="mg"><h2 style="font-size:2.6rem">Menu</h2><div class="ml">${r.m.map((m,k)=>{const q=it[m[0]]?.q||0;return`<div class="mi"><h3>${m[0]}</h3><span class="pr">$${m[1]}</span><p>${DS[id][k]}</p><div class="act">${q?`<div class="qs"><button data-q="${k}|-1" aria-label="Remove one">−</button><b>${q}</b><button data-q="${k}|1" aria-label="Add one">+</button></div>`:`<button class="add" data-add="${k}">Add to cart</button>`}</div></div>`}).join("")}</div></div></div>`}
+ <section class="mg"><div class="menu-heading"><div><span class="section-kicker">FROM THE KITCHEN</span><h2>Made for your kind of craving <span class="menu-count">${r.m.length} dishes</span></h2><p class="menu-subtitle">${esc(scene.story)}</p></div><label class="veg-toggle"><input type="checkbox" id="veg-menu" ${menuVegOnly?"checked":""}> <span>Vegetarian dishes only</span></label></div><div class="ml">${r.m.map((m,k)=>({m,k})).filter(({m})=>!menuVegOnly||m[3]).map(({m,k})=>{const q=it[m[0]]?.q||0;return`<article class="mi"><div class="food-photo">${r.e}<img src="${dishPhoto(r,m[0],k)}" alt="${esc(m[0])}" loading="lazy"></div><div class="dish-copy"><h3>${esc(m[0])}${m[3]?'<span class="veg-mark" title="Vegetarian">✳ Veg</span>':""}</h3><p>${esc(m[2])}</p></div><span class="pr">$${m[1]}</span><div class="act">${q?`<div class="qs"><button data-q="${k}|-1" aria-label="Remove one ${esc(m[0])}">−</button><b>${q}</b><button data-q="${k}|1" aria-label="Add one ${esc(m[0])}">+</button></div>`:`<button class="add" data-add="${k}">Add to cart</button>`}</div></article>`}).join("")}</div></section></div>`;
+ v.querySelectorAll("img").forEach(img=>img.addEventListener("error",()=>{img.parentElement.classList.add("image-missing");img.remove()},{once:true}));
+}
 function book(){const u=U();if(!u)return rme?toast("Log in as a customer to reserve a table"):auth("in","c");if(!rsv.t)return toast("Pick a time slot first");
  res.unshift({id:Date.now(),rn:cur.n,user:me,name:u.fn+" "+u.ln,date:days()[rsv.d],t:rsv.t,sz:rsv.sz});sv("nomo_res",res);toast(`Table for ${rsv.sz} at ${cur.n}, ${rsv.t}`);rsv.t=null;menuPage()}
 
@@ -156,7 +239,16 @@ document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)r
  else if(t.id==="po")order();
  else if(t.dataset.bk)flipBook(+t.dataset.bk);
  else if(t.dataset.f)t.dataset.f==="rest"?auth("up","r"):auth("in","c")});
-document.addEventListener("change",e=>{if(e.target.id==="rz")rsv.sz=+e.target.value});
+document.addEventListener("change",e=>{
+ if(e.target.id==="rz")rsv.sz=+e.target.value;
+ else if(e.target.id==="veg-menu"){
+  menuVegOnly=e.target.checked;
+  const url=new URL(location.href);
+  if(menuVegOnly)url.searchParams.set("veg","1");else url.searchParams.delete("veg");
+  history.replaceState(null,"",url);
+  menuPage();
+ }
+});
 
 /* restaurant dashboard */
 function dash(){const r=rests[rme],v=$("v-dash");
@@ -182,8 +274,8 @@ const EMB=['<path d="M-22-18Q0-30 22-18L0 26Z"/><circle cx="-6" cy="-8" r="3.5" 
 '<path d="M-20 24V-4A20 20 0 0 1 20-4V24Z"/><path d="M-10 24V0A10 10 0 0 1 10 0V24"/>',
 '<path d="M0-26C10-10 22-4 18 10C14 24-14 24-18 10C-20 0-8-6 0-26Z"/><path d="M0 22C-6 16-4 8 0 4C4 8 6 16 0 22Z"/>',
 '<path d="M-24 8Q0-30 24 8Q0 24-24 8Z"/><path d="M-12 0l4 8M0-4v12M12 0l-4 8"/>'];
-function stamp(id,ds,u){const r=R[id],c=INK[id],k=KIND[id],v=VAR[id],x=t=>t.replace(/&/g,"&amp;"),nm=x(r.n.toUpperCase()),cu=x(r.c.toUpperCase()),ar=cu+" · RALEIGH",
- em=(a,b,s)=>`<g transform="translate(${a} ${b}) scale(${s})" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${EMB[id]}</g>`,
+function stamp(id,ds,u){const r=R[id],si=id%INK.length,c=INK[si],k=KIND[si],v=VAR[si],x=t=>t.replace(/&/g,"&amp;"),nm=x(r.n.toUpperCase()),cu=x(r.c.toUpperCase()),ar=cu+" · "+r.city.toUpperCase(),
+ em=(a,b,s)=>`<g transform="translate(${a} ${b}) scale(${s})" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${EMB[si]}</g>`,
  tx=(a,b,fs,t,w=700)=>`<text x="${a}" y="${b}" text-anchor="middle" font-size="${fs}" font-weight="${w}" letter-spacing="1">${t}</text>`,
  dt=(b,fs,a=100)=>`<text x="${a}" y="${b}" text-anchor="middle" font-family="'Courier New',monospace" font-size="${fs}" font-weight="700">${ds}</text>`,
  ln=(w,extra="")=>`fill="none" stroke="currentColor" stroke-width="${w}" ${extra}`;let b="";
@@ -193,7 +285,7 @@ function stamp(id,ds,u){const r=R[id],c=INK[id],k=KIND[id],v=VAR[id],x=t=>t.repl
  ${v==="band"?`${em(100,74,.55)}<rect x="46" y="94" width="108" height="26" ${ln(2.5)}/>${dt(112,14)}`:`${em(100,82,.8)}${dt(126,13)}`}`;
  else if(k==="o")b=`<ellipse cx="100" cy="100" rx="94" ry="70" ${ln(4)}/><ellipse cx="100" cy="100" rx="86" ry="62" ${ln(1.5)}/>${tx(100,58,12,nm,800)}${em(100,88,.5)}${dt(122,15)}${tx(100,146,10,cu)}`;
  else if(k==="n")b=`<path d="M24 40H176A10 10 0 0 0 186 50V150A10 10 0 0 0 176 160H24A10 10 0 0 0 14 150V50A10 10 0 0 0 24 40Z" ${ln(4)}/>${tx(100,66,15,nm,800)}<path d="M28 76H172" ${ln(1.5,'stroke-dasharray="3 3"')}/>${em(52,110,.6)}${dt(108,14,122)}${tx(58,148,10,cu)}<rect x="128" y="133" width="46" height="18" ${ln(2,'stroke-dasharray="3 2"')}/>${tx(151,146,10,"N° "+String(id+1).padStart(3,"0"))}`;
- else if(k==="q")b=`<rect x="16" y="16" width="168" height="168" rx="8" ${ln(5)}/><rect x="26" y="26" width="148" height="148" ${ln(1.5)}/>${tx(100,56,16,nm,800)}${em(100,100,.85)}${dt(146,14)}${tx(100,166,10,"RALEIGH · N.C.")}`;
+ else if(k==="q")b=`<rect x="16" y="16" width="168" height="168" rx="8" ${ln(5)}/><rect x="26" y="26" width="148" height="148" ${ln(1.5)}/>${tx(100,56,16,nm,800)}${em(100,100,.85)}${dt(146,14)}${tx(100,166,10,r.city.toUpperCase()+" · N.C.")}`;
  else if(k==="h")b=`<polygon points="60,8 140,8 192,60 192,140 140,192 60,192 8,140 8,60" ${ln(4)}/><polygon points="66,21 134,21 179,66 179,134 134,179 66,179 21,134 21,66" ${ln(1.5)}/>${tx(100,56,13,nm,800)}${em(100,97,.65)}${dt(140,14)}${tx(100,160,10,cu)}`;
  else if(k==="a")b=`<path d="M22 190V92A78 78 0 0 1 178 92V190Z" ${ln(4)}/><path d="M32 180V92A68 68 0 0 1 168 92V180Z" ${ln(1.5)}/>${em(100,80,.6)}${tx(100,124,13,nm,800)}${dt(148,14)}${tx(100,168,10,cu)}`;
  else b=`<rect x="8" y="46" width="184" height="108" rx="8" ${ln(6)}/><rect x="17" y="55" width="166" height="90" rx="4" ${ln(1.5)}/>${tx(100,82,17,nm,800)}<text x="100" y="99" text-anchor="middle" font-size="10">★ ★ ★ ★ ★</text>${em(42,124,.4)}${dt(129,14,122)}`;
