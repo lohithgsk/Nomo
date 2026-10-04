@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>nomo | Stop scrolling menus. Start a food journey.</title>
+<title>Explore restaurants | nomo</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600&family=Nunito:wght@400;600;800&family=Cormorant+Garamond:wght@500;600&family=DM+Serif+Display&family=Jost:wght@300;400;500&family=Lora:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <nav>
  <a class="logo" href="index.html">nomo<i>.</i></a>
- <div class="links"><a href="explore.html">Explore</a><a href="passport.html">Passport</a><a href="community.html">Community</a></div>
+ <div class="links"><a href="explore.html" class="on">Explore</a><a href="passport.html">Passport</a><a href="community.html">Community</a></div>
  <div class="right">
   <a class="ib" id="cb" href="cart.html" aria-label="Open cart" style="position:relative;text-decoration:none">🛒<span class="bdg" id="cn" style="display:none">0</span></a>
   <button class="ib" id="th" aria-label="Toggle light or dark theme">🌙</button>
@@ -20,25 +20,10 @@
 </nav>
 
 <main>
-<div class="view wide" id="v-home">
- <div class="hero gin">
-  <div><h1>Stop scrolling menus. <em>Start a food journey.</em></h1>
-  <p>nomo turns “what should I eat?” into a roadmap. Find restaurants in your city, collect a stamp in your own Food Passport, and share what you loved.</p>
-  <button class="btn" id="cta">Get your passport</button> <a class="btn o" href="explore.html" style="text-decoration:none;display:inline-block">Browse restaurants</a></div>
-  <div class="stage"><div class="ring" id="ring"></div><div class="plate">🍝</div></div>
- </div>
- <div class="pad"><h2 class="t">What is nomo?</h2><p class="sub">A food discovery platform that rewards curiosity. Other apps help you reorder the same dinner. nomo helps you find the next new one.</p>
-  <div class="grid3">
-   <div class="card"><div class="em">🛂</div><h3>Food Passport</h3><p>Every account gets its own passport. Visit or order from a restaurant and it earns a stamp.</p></div>
-   <div class="card"><div class="em">🗺️</div><h3>Food Roadmap</h3><p>Level up from Beginner to Legend as your stamps grow, with a new level every 5 restaurants.</p></div>
-   <div class="card"><div class="em">💬</div><h3>Food Community</h3><p>Post the dish you loved, reply to other explorers, and find your next meal from people with taste.</p></div>
-  </div></div>
- <div class="band gin" style="background-color:var(--red)"><h2 class="t">Why people try nomo</h2>
-  <div class="n"><div><b>70%</b>of testers tried something new</div><div><b>25</b>stamps to finish the expedition</div><div><b>0</b>doom-scrolling required</div></div></div>
- <div class="pad"><h2 class="t">How it works</h2><div class="grid3" style="margin-top:22px">
-  <div class="card"><h3>1. Sign up</h3><p>Create an account and receive your passport.</p></div>
-  <div class="card"><h3>2. Explore</h3><p>Pick a city, filter by cuisine, read the menu.</p></div>
-  <div class="card"><h3>3. Eat and stamp</h3><p>Log a visit, earn a stamp, unlock levels.</p></div></div></div>
+<div class="view" id="v-explore">
+ <div class="exh gin"><h2 class="t">What are you craving in Raleigh?</h2><p class="sub">Pick a city, search a dish, or filter by cuisine. Tap any restaurant to open its menu.</p></div>
+ <div class="bar"><select id="city" aria-label="City"><option>Raleigh, NC</option><option disabled>Durham (coming soon)</option><option disabled>Charlotte (coming soon)</option></select><input id="q" type="search" placeholder="Search name or dish" aria-label="Search restaurants" style="flex:2"></div>
+ <div class="chips" id="chips"></div><div class="grid3" id="rg" style="margin-top:20px"></div>
 </div>
 </main>
 <footer class="ft"><div class="fw">
@@ -53,6 +38,6 @@
 <div class="toast" id="ts" role="status"></div>
 
 <script src="js/app.js"></script>
-<script></script>
+<script>explore();</script>
 </body>
 </html>
