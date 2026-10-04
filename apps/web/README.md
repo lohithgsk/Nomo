@@ -3,8 +3,8 @@
 ## 🌟 Key Features
 
 * **Food Passport & Level Progression:** Earn digital stamps every time you visit or order from a restaurant. Track your progression from *Beginner* to *Legend* (unlocking new ranks every 5 stamps).
-* **Curated Food Discovery:** Browse Raleigh, Durham, and Charlotte restaurants by location, cuisine, price point, ratings, menu items, and vegetarian options.
-* **Themed Restaurant Menus:** Restaurant-specific, photo-led pages with custom cuisine styling and photographs for every menu item.
+* **Curated Food Discovery:** Browse Raleigh, Durham, and Charlotte restaurants by location, cuisine, price point, ratings, and menu items.
+* **Themed Restaurant Menus:** Restaurant-specific, photo-led pages with distinct cuisine styling, vegetarian and non-vegetarian dishes, and photographs for every menu item.
 * **Food Community Feed:** Share loved dishes, post review notes, like recommendations, and reply to fellow food explorers.
 * **Interactive Cart & Reservations:** Build food orders or reserve a table directly within the interface.
 * **Dual-Account System:** Specialized login/signup workflows for both **Customers** (explorers tracking passports) and **Restaurant Partners** (managing restaurant profiles/dashboards).

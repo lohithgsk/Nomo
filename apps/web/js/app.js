@@ -11,7 +11,7 @@ const R=[
 ["Smoke & Sweet","Southern BBQ","Boylan Heights","$$",4.7,"🍖",[["Pulled Pork Plate",15],["Mac & Cheese",6],["Banana Pudding",6]]],
 ["Dragon Steam","Chinese","Cary Town","$",4.3,"🥟",[["Soup Dumplings",12],["Dan Dan Noodles",13],["Mapo Tofu",14]]]
 ].map((r,i)=>({id:i,n:r[0],c:r[1],a:r[2],p:r[3],s:r[4],e:r[5],m:r[6]}));
-const AD=["212 Fayetteville St","408 Glenwood Ave","1120 Bagwell Ave","301 S Blount St","2010 Clark Ave","4209 Lassiter Mill Rd","1500 Hillsborough St","615 E Davie St","118 S West St","905 Preston Rd","710 W Main St","916 Broad St","1423 S Tryon St","401 W 9th St"];
+const AD=["212 Fayetteville St","408 Glenwood Ave","1120 Bagwell Ave","301 S Blount St","2010 Clark Ave","4209 Lassiter Mill Rd","1500 Hillsborough St","615 E Davie St","118 S West St","905 Preston Rd","710 W Main St","916 Broad St","1423 S Tryon St","401 W 9th St","905 W Main St","705 Willard St","112 E 36th St","1515 S Tryon St"];
 /* one visual theme per restaurant menu: bg, ink, card, accent, accent2, button text, heading font, pattern */
 /* calm menu palettes: page, ink, soft shape, accent, button text, heading font */
 const T=[
@@ -35,15 +35,31 @@ const DS=[["San Marzano tomato, buffalo mozzarella and fresh basil","Pecorino Ro
 ["Spiced lamb, garlic sauce and pickles in warm pita","Hummus, baba ganoush, tabbouleh and olives","Layers of filo, pistachio and honey syrup"],
 ["Twelve-hour smoked pork with slaw and pickles","Sharp cheddar and toasted breadcrumbs","Vanilla wafers, bananas and custard"],
 ["Delicate dumplings filled with pork and rich broth","Wheat noodles, chili oil, sesame and minced pork","Silken tofu in a spicy fermented bean sauce"]];
-const VEG=new Set(["Margherita Pizza","Cacio e Pepe","Tiramisu","Masala Dosa","Mango Lassi","Churros","Matcha Mochi","Veggie Combo","Mango Sticky Rice","Bibimbap","Mezze Board","Baklava","Mac & Cheese","Banana Pudding"]);
-const EXTRAS=[
+const VEG=new Set(["Margherita Pizza","Cacio e Pepe","Tiramisu","Masala Dosa","Mango Lassi","Churros","Matcha Mochi","Veggie Combo","Mango Sticky Rice","Bibimbap","Mezze Board","Baklava","Mac & Cheese","Banana Pudding","Mapo Tofu"]);
+const SIDES=[
  ["Seasonal House Salad",9,"Market greens, cucumber, tomato and house vinaigrette",true],
  ["Crispy Potatoes",7,"Golden potatoes with herbs and a house dipping sauce",true],
- ["Steamed Rice",5,"Fluffy rice finished with fresh herbs",true],
- ["Roasted Seasonal Vegetables",8,"Market vegetables roasted with olive oil and herbs",true],
- ["Soup of the Day",8,"A comforting seasonal soup made fresh daily",true],
- ["Fresh Lemonade",4,"Fresh-squeezed lemons with a hint of sweetness",true],
  ["Chocolate Cake",8,"Rich chocolate cake with a silky cocoa finish",true]
+];
+const MENU_ADDONS=[
+ [["Burrata & Tomato",13,"Creamy burrata, ripe tomatoes, basil and grilled bread",true],["Beef Ragù Pappardelle",21,"Slow-braised beef ragù with wide ribbons of fresh pasta",false],["Chicken Parmigiana",19,"Crisp chicken, tomato sugo and melted mozzarella",false],["Sausage & Peppers Pizza",18,"Roasted peppers, fennel sausage and mozzarella",false]],
+ [["Paneer Tikka",15,"Tandoor-charred paneer with peppers and mint chutney",true],["Chicken Biryani",18,"Fragrant basmati rice layered with spiced chicken",false],["Lamb Rogan Josh",21,"Slow-braised lamb in a Kashmiri chile sauce",false],["Tandoori Chicken",19,"Yogurt-marinated chicken roasted with warming spices",false]],
+ [["Roasted Poblano Quesadilla",13,"Roasted peppers, Oaxaca cheese and salsa verde",true],["Carne Asada Burrito",17,"Grilled steak, black beans, rice and charred salsa",false],["Chicken Tinga Tostadas",15,"Chipotle-braised chicken on crisp corn tostadas",false],["Camarones a la Diabla",20,"Shrimp in a smoky chile sauce with lime",false]],
+ [["Edamame with Sea Salt",7,"Steamed young soybeans with flaky sea salt",true],["Chicken Karaage",12,"Japanese-style fried chicken with lemon",false],["Salmon Teriyaki Don",19,"Glazed salmon over rice with pickled vegetables",false],["Shrimp Tempura",14,"Lightly battered shrimp with tentsuyu dipping sauce",false]],
+ [["Shiro Wat",15,"Mild chickpea stew with berbere and aromatic herbs",true],["Tibs",20,"Sautéed beef with onions, rosemary and warm spices",false],["Key Wat",19,"Slow-cooked beef stew in a deep berbere sauce",false],["Awaze Chicken",18,"Spiced chicken sautéed with onions and awaze",false]],
+ [["Tofu Pad Thai",16,"Rice noodles, tofu, tamarind and crushed peanuts",true],["Chicken Satay",13,"Grilled chicken skewers with peanut sauce",false],["Pad See Ew with Beef",18,"Wide rice noodles, greens and seared beef",false],["Thai Basil Shrimp",20,"Wok-tossed shrimp with holy basil and chile",false]],
+ [["Japchae",15,"Sweet-potato noodles, mushrooms and seasonal vegetables",true],["Bulgogi Beef",21,"Thin-sliced beef marinated in pear and soy",false],["Pork Belly Bossam",22,"Slow-braised pork belly with ssam and pickles",false],["Spicy Pork Bulgogi",19,"Gochujang-marinated pork with scallions",false]],
+ [["Falafel Pita",14,"Herb falafel, pickled turnip and tahini",true],["Chicken Shawarma Plate",19,"Spiced chicken, saffron rice and garlic toum",false],["Lamb Kofta",21,"Grilled lamb skewers with yogurt and sumac",false],["Garlic Shrimp Mezze",20,"Sizzling shrimp with lemon, herbs and warm pita",false]],
+ [["Smoked Cauliflower",13,"Pit-smoked cauliflower with pepper vinegar",true],["Texas-Style Brisket",23,"Oak-smoked brisket with a peppery bark",false],["Smoked Chicken Quarter",18,"Hickory-smoked chicken with house barbecue sauce",false],["St. Louis Pork Ribs",24,"Slow-smoked pork ribs finished over the coals",false]],
+ [["Garlic Bok Choy",12,"Wok-seared greens with garlic and sesame",true],["Char Siu Pork",18,"Cantonese roast pork glazed with honey and five-spice",false],["Beef Chow Fun",19,"Wok-tossed rice noodles with tender beef",false],["Chicken & Shiitake Bao",15,"Steamed buns filled with chicken and shiitake",false]],
+ [["Smoked Cauliflower",13,"Pit-smoked cauliflower with pepper vinegar",true],["Texas-Style Brisket",23,"Oak-smoked brisket with a peppery bark",false],["Smoked Chicken Quarter",18,"Hickory-smoked chicken with house barbecue sauce",false],["St. Louis Pork Ribs",24,"Slow-smoked pork ribs finished over the coals",false]],
+ [["Lemongrass Tofu Vermicelli",15,"Rice vermicelli, crisp tofu, herbs and pickled vegetables",true],["Bún Bò Huế",19,"Spicy beef and pork broth with thick rice noodles",false],["Shaking Beef",22,"Wok-seared beef with watercress and lime",false],["Grilled Pork Bánh Mì",15,"Lemongrass pork, pickles and cilantro on a crisp baguette",false]],
+ [["Avocado & Black Bean Arepa",14,"Griddled corn cake with avocado and seasoned black beans",true],["Pabellón Criollo",19,"Shredded beef, black beans, rice and sweet plantain",false],["Chicken Guasacaca Arepa",16,"Pulled chicken with avocado-herb guasacaca",false],["Carne Mechada Arepa",18,"Slow-braised shredded beef in a corn cake",false]],
+ [["Mushroom & Poblano Tacos",14,"Roasted mushrooms, poblano and salsa verde",true],["Barbacoa Quesadilla",18,"Slow-braised beef, Oaxaca cheese and consommé",false],["Pollo Asado Tacos",16,"Citrus-marinated grilled chicken with charred salsa",false],["Baja Fish Tacos",19,"Crisp white fish, cabbage and lime crema",false]],
+ [["Tofu & Vegetable Curry",17,"Seasonal vegetables and tofu in coconut green curry",true],["Chicken Panang Curry",20,"Tender chicken simmered with kaffir lime and coconut",false],["Thai Basil Beef",21,"Wok-seared beef, holy basil and fresh chile",false],["Shrimp Pad Thai",20,"Rice noodles, shrimp, tamarind and crushed peanuts",false]],
+ [["Grilled Corn & Greens",12,"Charred corn, greens and a bright pepper-vinegar dressing",true],["Brisket Burnt Ends",16,"Smoky brisket bites glazed with house barbecue sauce",false],["Pulled Pork Plate",18,"Slow-smoked pork shoulder with two sides",false],["Smoked Turkey Breast",19,"Hickory-smoked turkey with pepper gravy",false]],
+ [["Margherita Pizza",17,"San Marzano tomato, mozzarella and fresh basil",true],["Pepperoni & Hot Honey",20,"Crisp pepperoni, mozzarella and local hot honey",false],["Chicken Pesto Pizza",19,"Roasted chicken, basil pesto and mozzarella",false],["Sausage & Fennel Pizza",20,"House sausage, fennel and San Marzano tomato",false]],
+ [["Kimchi Fried Rice",16,"Wok-fried rice, vegetables and house kimchi",true],["Bulgogi Beef Bowl",21,"Marinated beef, rice, sesame greens and scallions",false],["Dakgalbi",20,"Spicy stir-fried chicken with cabbage and rice cakes",false],["Pork Belly Bossam",22,"Slow-braised pork belly with ssam and pickles",false]]
 ];
 const MORE=[
  {n:"Bull City Kitchen",c:"Southern",a:"Downtown",p:"$$",s:4.7,e:"🍗",city:"Durham",m:[
@@ -65,29 +81,55 @@ const MORE=[
   ["Carne Asada Tacos",15,"Grilled steak, salsa verde and warm corn tortillas",false],
   ["Mushroom Tinga Tacos",13,"Smoky mushrooms, cabbage and avocado",true],
   ["Street Corn",7,"Grilled corn with lime, cotija and chile",true]
+ ]},
+ {n:"Lemongrass & Lime",c:"Thai",a:"Brightleaf District",p:"$$",s:4.7,e:"🍲",city:"Durham",m:[
+  ["Green Papaya Salad",13,"Green papaya, lime, peanuts and fresh herbs",true],
+  ["Chicken Panang Curry",19,"Chicken simmered in creamy red curry with kaffir lime",false],
+  ["Crispy Pork Basil",20,"Crisp pork, holy basil and garlic chile sauce",false]
+ ]},
+ {n:"Bull City Smokehouse",c:"Southern BBQ",a:"American Tobacco Campus",p:"$$",s:4.6,e:"🍖",city:"Durham",m:[
+  ["Smoked Mushroom Sandwich",15,"Pit-smoked mushrooms, slaw and Carolina sauce",true],
+  ["Beef Brisket Plate",24,"Oak-smoked brisket with two house sides",false],
+  ["Pulled Chicken Sandwich",17,"Smoked chicken, pickles and pepper vinegar",false]
+ ]},
+ {n:"Queen City Pizzeria",c:"Italian",a:"NoDa",p:"$$",s:4.8,e:"🍕",city:"Charlotte",m:[
+  ["Roasted Mushroom Pizza",18,"Wild mushrooms, fontina and thyme on a blistered crust",true],
+  ["Sausage & Fennel Pizza",20,"House sausage, fennel and San Marzano tomato",false],
+  ["Chicken Pesto Pizza",19,"Roasted chicken, basil pesto and mozzarella",false]
+ ]},
+ {n:"South End Seoul",c:"Korean",a:"South End",p:"$$",s:4.7,e:"🥘",city:"Charlotte",m:[
+  ["Crispy Tofu Bibimbap",16,"Crisp tofu, seasoned vegetables and gochujang",true],
+  ["Bulgogi Rice Bowl",20,"Marinated beef, warm rice and sesame greens",false],
+  ["Korean Fried Chicken",19,"Crispy chicken glazed with gochujang honey",false]
  ]}
 ];
 MORE.forEach((r,i)=>{r.id=10+i;R.push(r)});
 R.forEach((r,i)=>{
  r.city=r.city||"Raleigh";
- r.m=[...r.m.map(m=>[m[0],m[1],m[2]||DS[i]?.[r.m.indexOf(m)]||"A house favorite made with fresh ingredients",m[3]??VEG.has(m[0])]),...EXTRAS];
+ r.m=[...r.m.map(m=>[m[0],m[1],m[2]||DS[i]?.[r.m.indexOf(m)]||"A house favorite made with fresh ingredients",m[3]??VEG.has(m[0])]),...MENU_ADDONS[i],...SIDES];
 });
 const SCENES=[
  ["wood-fired pizzeria","A little Italy, right around the corner.","Hand-stretched dough, blistered crusts and long-table evenings.","photo-1550966871-3ed3cdb5ed0c"],
  ["Indian supper club","Big-hearted Indian cooking.","Slow-simmered favorites, fragrant spices and a little something sweet.","photo-1517248135467-4c7edcad34c4"],
  ["neighborhood taqueria","A bright, lively taqueria.","Smoky chiles, fresh tortillas and the best kind of messy lunch.","photo-1559339352-11d035aa65de"],
- ["late-night ramen bar","A bowl worth slowing down for.","Long-simmered broth, springy noodles and a seat at the counter.","photo-1514933651103-005eec06c04b"],
+ ["late-night ramen bar","A bowl worth slowing down for.","Long-simmered broth, springy noodles and a seat at the counter.","photo-1555396273-367ea4eb4db5"],
  ["Ethiopian sharing table","Gather close. Pass the injera.","A generous spread of slow-cooked stews, lentils and warm spice.","photo-1414235077428-338989a2e8c0"],
- ["Bangkok street-food kitchen","A little heat, a lot of flavor.","Fresh herbs, wok-fired favorites and sweet mango to finish.","photo-1552566626-52f8b828add9"],
- ["Korean comfort kitchen","Comfort food with a Korean kick.","Sizzling rice bowls, deep savory flavor and a little crunch.","photo-1514933651103-005eec06c04b"],
- ["Mediterranean mezze house","Make room for one more plate.","Olive oil, bright herbs, warm bread and a table made for sharing.","photo-1414235077428-338989a2e8c0"],
- ["Carolina smokehouse","Low and slow, Carolina style.","Smoky favorites, familiar sides and something sweet after.","photo-1555396273-367ea4eb4db5"],
- ["Chinese dumpling house","Folded by hand. Made to share.","Steamy baskets, silky noodles and the comfort of a familiar table.","photo-1552566626-52f8b828add9"],
- ["Durham smokehouse","Bull City barbecue, low and slow.","Smoked favorites, Carolina sides and room to stay a while.","photo-1555396273-367ea4eb4db5"],
- ["Ninth Street noodle shop","A warm bowl on Ninth Street.","Bright herbs, fragrant broth and noodles made for a long lunch.","photo-1514933651103-005eec06c04b"],
- ["Queen City arepera","Venezuelan comfort, made by hand.","Golden corn cakes, slow-cooked fillings and a little taste of home.","photo-1552566626-52f8b828add9"],
- ["South End taco room","Tacos, salsa and one more round.","Fresh tortillas, smoky fillings and bright, punchy salsas.","photo-1559339352-11d035aa65de"]
+ ["Bangkok street-food kitchen","A little heat, a lot of flavor.","Fresh herbs, wok-fired favorites and sweet mango to finish.","photo-1540189549336-e6e99c3679fe"],
+ ["Korean comfort kitchen","Comfort food with a Korean kick.","Sizzling rice bowls, deep savory flavor and a little crunch.","photo-1563245372-f21724e3856d"],
+ ["Mediterranean mezze house","Make room for one more plate.","Olive oil, bright herbs, warm bread and a table made for sharing.","photo-1512621776951-a57141f2eefd"],
+ ["Carolina smokehouse","Low and slow, Carolina style.","Smoky favorites, familiar sides and something sweet after.","photo-1529692236671-f1f6cf9683ba"],
+ ["Chinese dumpling house","Folded by hand. Made to share.","Steamy baskets, silky noodles and the comfort of a familiar table.","photo-1601050690597-df0568f70950"],
+ ["Durham smokehouse","Bull City barbecue, low and slow.","Smoked favorites, Carolina sides and room to stay a while.","photo-1544025162-d76694265947"],
+ ["Ninth Street noodle shop","A warm bowl on Ninth Street.","Bright herbs, fragrant broth and noodles made for a long lunch.","photo-1547592180-85f173990554"],
+ ["Queen City arepera","Venezuelan comfort, made by hand.","Golden corn cakes, slow-cooked fillings and a little taste of home.","photo-1565299507177-b0ac66763828"],
+ ["South End taco room","Tacos, salsa and one more round.","Fresh tortillas, smoky fillings and bright, punchy salsas.","photo-1593560708920-61dd98c46a4e"]
 ].map(([type,headline,story,photo])=>({type,headline,story,photo}));
+SCENES.push(
+ {...SCENES[5],type:"Durham Thai kitchen",headline:"A little heat, a lot of heart.",story:"Fresh herbs, wok-fired favorites and bright, fragrant curries."},
+ {...SCENES[8],type:"Bull City smokehouse",headline:"Smoke, slow time and Carolina sides.",story:"Fire-kissed comfort with a little Durham character."},
+ {...SCENES[0],type:"NoDa neighborhood pizzeria",headline:"A Charlotte table, straight from the oven.",story:"Blistered crusts, local ingredients and easygoing Italian favorites."},
+ {...SCENES[6],type:"Korean comfort kitchen",headline:"A little Seoul in South End.",story:"Savory rice bowls, crisp bites and the pleasure of sharing."}
+);
 const FOOD_PHOTOS={
  pizza:["photo-1574071318508-1cdbab80d002","photo-1604382355076-af4b0eb60143","photo-1593560708920-61dd98c46a4e"],
  pasta:["photo-1551183053-bf91a1d81141","photo-1546549032-9571cd6b27df","photo-1513104890138-7c749659a591"],
@@ -100,7 +142,7 @@ const FOOD_PHOTOS={
  dessert:["photo-1578985545062-69928b1d9587","photo-1488477181946-6428a0291777","photo-1565958011703-44f9829ba187"],
  drink:["photo-1544145945-f90425340c7e","photo-1488477181946-6428a0291777","photo-1565958011703-44f9829ba187"]
 };
-const FOOD_STYLE=["pizza","curry","taco","noodle","greens","noodle","dumpling","greens","bbq","dumpling","bbq","noodle","taco","taco"];
+const FOOD_STYLE=["pizza","curry","taco","noodle","greens","noodle","dumpling","greens","bbq","dumpling","bbq","noodle","taco","taco","curry","bbq","pizza","dumpling"];
 R.forEach((r,i)=>{r.scene=SCENES[i];r.foodStyle=FOOD_STYLE[i]});
 function imageUrl(id,width){return`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=82`}
 function dishPhoto(r,dish,index){
@@ -162,10 +204,11 @@ $("as").onclick=async()=>{const v=id=>($(id)?.value||"").trim(),e=$("ae");
 $("cta")?.addEventListener("click",()=>U()?location.href="explore.html":auth("up","c"));
 
 /* explore */
-function explore(){const cs=["All",...new Set(R.map(r=>r.c))],q=$("q").value.toLowerCase(),seen=new Set((U()?.st||[]).map(s=>s.id)),em=c=>c==="All"?"🍽️":R.find(r=>r.c===c).e;
- $("chips").innerHTML=cs.map(c=>`<button class="chip ${c===cuisine?"on":""}" data-c="${c}">${em(c)} ${c}</button>`).join("");
+function explore(){const cs=["All",...new Set(R.map(r=>r.c))],q=$("q").value.toLowerCase(),seen=new Set((U()?.st||[]).map(s=>s.id));
+ $("chips").innerHTML=cs.map(c=>`<button class="chip ${c===cuisine?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
 const f=R.filter(r=>(city==="All"||r.city===city)&&(cuisine==="All"||r.c===cuisine)&&(r.n+r.c+r.a+r.city+r.m.map(m=>m[0]).join()).toLowerCase().includes(q));
-$("rg").innerHTML=f.length?f.map(r=>{const t=T[r.id%T.length],tile=document.documentElement.dataset.theme==="dark"?"radial-gradient(circle at 70% 30%,#3a483d,#273129)":`radial-gradient(circle at 70% 30%,${t.soft},${t.bg})`;return`<button class="card rest" data-id="${r.id}"><div class="rt" style="background:${tile}">${r.e}</div><h3>${r.n}</h3><p class="rest-meta">${r.a} · ${r.city}, NC · ${r.p} · ★ ${r.s}</p><span class="tag">${r.c}</span>${r.m.some(m=>m[3])?'<span class="tag g">Veg options</span>':""}${seen.has(r.id)?'<span class="tag g">Stamped</span>':""}<p class="menu-link">View menu · ${r.m.length} dishes</p></button>`}).join(""):'<p class="sub">Nothing matches yet. Try another city, cuisine or search.</p>';
+$("rg").innerHTML=f.length?f.map(r=>`<button class="card rest" data-id="${r.id}"><div class="rest-cover"><img class="restaurant-thumb" src="${imageUrl(r.scene.photo,960)}" alt="" loading="lazy"><span class="rest-location">${esc(r.city)}, NC</span><span class="rest-cover-shade"></span><span class="rest-cuisine">${esc(r.c)}</span></div><div class="rest-details"><h3>${esc(r.n)}</h3><p class="rest-meta">${esc(r.a)} · ${r.p} · ★ ${r.s}</p>${seen.has(r.id)?'<span class="tag g">Visited</span>':""}<p class="menu-link">Explore menu <span aria-hidden="true">→</span></p></div></button>`).join(""):'<p class="sub">Nothing matches yet. Try another city, cuisine or search.</p>';
+ $("rg").querySelectorAll(".restaurant-thumb").forEach(img=>img.addEventListener("error",()=>img.closest(".rest-cover").classList.add("image-missing"),{once:true}));
 $("chips").onclick=e=>{const b=e.target.closest("[data-c]");if(b){cuisine=b.dataset.c;explore()}};
 $("city").onchange=()=>{city=$("city").value;explore()};
 $("q").oninput=explore;
@@ -186,12 +229,12 @@ function menuPage(){const id=+new URLSearchParams(location.search).get("id"),r=R
   <div class="restaurant-hero-copy"><a class="hero-back" href="explore.html">← All restaurants</a><span class="restaurant-type">${esc(scene.type)}</span><h1>${esc(r.n)}</h1><p class="restaurant-story">${esc(scene.headline)}</p><p class="restaurant-intro">${esc(scene.story)}</p>
    <div class="mm"><span>${esc(AD[id])}, ${esc(r.a)}, ${esc(r.city)}, NC</span><span>${esc(r.c)}</span><span>${esc(r.p)}</span><span>★ ${r.s}</span></div>
    <div class="restaurant-actions"><button class="mb" id="rb">${rsv.open?"Hide time slots":"Reserve a table"}</button>${has?' <a class="mb o" href="cart.html">View cart</a>':""}</div>
-  </div><div class="restaurant-mark" aria-hidden="true">${r.e}</div>
+  </div>
  </section>
  ${rsv.open?`<div class="mr"><h2 style="font-size:2rem">Reserve a table</h2><div class="rowc">${ds.map((d,i)=>`<button class="mchip ${i===rsv.d?"on":""}" data-d="${i}">${d}</button>`).join("")}</div>
  <label>Party size <select id="rz">${[1,2,3,4,5,6,8].map(n=>`<option ${n===rsv.sz?"selected":""}>${n}</option>`).join("")}</select></label>
  <h3 style="margin-top:18px;font-size:1.5rem">Available time slots</h3><div class="rowc">${sl.map(s=>`<button class="mchip ${s.t===rsv.t?"on":""}" ${s.full?"disabled":""} data-t="${s.t}">${s.t}${s.full?" (full)":""}</button>`).join("")}</div><button class="mb" id="rc">Confirm reservation</button></div>`:""}
- <section class="mg"><div class="menu-heading"><div><span class="section-kicker">FROM THE KITCHEN</span><h2>Made for your kind of craving <span class="menu-count">${r.m.length} dishes</span></h2><p class="menu-subtitle">${esc(scene.story)}</p></div><label class="veg-toggle"><input type="checkbox" id="veg-menu" ${menuVegOnly?"checked":""}> <span>Vegetarian dishes only</span></label></div><div class="ml">${r.m.map((m,k)=>({m,k})).filter(({m})=>!menuVegOnly||m[3]).map(({m,k})=>{const q=it[m[0]]?.q||0;return`<article class="mi"><div class="food-photo">${r.e}<img src="${dishPhoto(r,m[0],k)}" alt="${esc(m[0])}" loading="lazy"></div><div class="dish-copy"><h3>${esc(m[0])}${m[3]?'<span class="veg-mark" title="Vegetarian">✳ Veg</span>':""}</h3><p>${esc(m[2])}</p></div><span class="pr">$${m[1]}</span><div class="act">${q?`<div class="qs"><button data-q="${k}|-1" aria-label="Remove one ${esc(m[0])}">−</button><b>${q}</b><button data-q="${k}|1" aria-label="Add one ${esc(m[0])}">+</button></div>`:`<button class="add" data-add="${k}">Add to cart</button>`}</div></article>`}).join("")}</div></section></div>`;
+ <section class="mg"><div class="menu-heading"><div><span class="section-kicker">FROM THE KITCHEN</span><h2>Made for your kind of craving <span class="menu-count">${r.m.length} dishes</span></h2><p class="menu-subtitle">${esc(scene.story)}</p></div><label class="veg-toggle"><input type="checkbox" id="veg-menu" ${menuVegOnly?"checked":""}> <span>Vegetarian dishes only</span></label></div><div class="ml">${r.m.map((m,k)=>({m,k})).filter(({m})=>!menuVegOnly||m[3]).map(({m,k})=>{const q=it[m[0]]?.q||0,kind=m[3]?"veg":"nonveg",label=m[3]?"Vegetarian":"Non-vegetarian";return`<article class="mi"><div class="food-photo">${r.e}<img src="${dishPhoto(r,m[0],k)}" alt="${esc(m[0])}" loading="lazy"></div><div class="dish-copy"><div class="dish-title"><h3>${esc(m[0])}</h3><span class="diet-symbol ${kind}" role="img" aria-label="${label}" title="${label}"><i aria-hidden="true"></i><b>${m[3]?"VEG":"NON-VEG"}</b></span></div><p>${esc(m[2])}</p></div><span class="pr">$${m[1]}</span><div class="act">${q?`<div class="qs"><button data-q="${k}|-1" aria-label="Remove one ${esc(m[0])}">−</button><b>${q}</b><button data-q="${k}|1" aria-label="Add one ${esc(m[0])}">+</button></div>`:`<button class="add" data-add="${k}">Add to cart</button>`}</div></article>`}).join("")}</div></section></div>`;
  v.querySelectorAll("img").forEach(img=>img.addEventListener("error",()=>{img.parentElement.classList.add("image-missing");img.remove()},{once:true}));
 }
 function book(){const u=U();if(!u)return rme?toast("Log in as a customer to reserve a table"):auth("in","c");if(!rsv.t)return toast("Pick a time slot first");
