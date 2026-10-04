@@ -22,7 +22,7 @@
 <main>
 <div class="view" id="v-explore">
  <div class="exh gin"><h2 class="t">Find your next favorite.</h2><p class="sub">Explore Raleigh, Durham, Charlotte, Cary and Chapel Hill. Search a dish, filter by cuisine, and find vegetarian choices on each menu.</p></div>
- <div class="bar"><select id="city" aria-label="Filter restaurants by city"><option value="All">All cities</option><option value="Raleigh">Raleigh, NC</option><option value="Durham">Durham, NC</option><option value="Charlotte">Charlotte, NC</option><option value="Cary">Cary, NC</option><option value="Chapel Hill">Chapel Hill, NC</option></select><input id="q" type="search" placeholder="Search restaurant, city or dish" aria-label="Search restaurants"></div>
+ <div class="bar"><div class="city-picker" id="city-picker"><button class="city-trigger" id="city-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="city-options"><span class="city-trigger-copy"><small>EXPLORE BY CITY</small><b id="city-label">All cities</b></span><span class="city-chevron" aria-hidden="true">⌄</span></button><div class="city-options" id="city-options" role="listbox" aria-label="Filter restaurants by city"></div></div><input id="q" type="search" placeholder="Search restaurant, city or dish" aria-label="Search restaurants"></div>
  <div class="chips" id="chips"></div><div class="grid3" id="rg" style="margin-top:20px"></div>
 </div>
 </main>

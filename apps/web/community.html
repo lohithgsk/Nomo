@@ -20,9 +20,16 @@
 </nav>
 
 <main>
-<div class="view" id="v-community">
- <h2 class="t">Food Community</h2><p class="sub">Start a conversation, share a dish you loved, and like what others recommend.</p>
- <div class="card" id="comp"></div><div class="grid3" id="pg" style="margin-top:22px"></div>
+<div class="view community-view" id="v-community">
+ <header class="community-intro">
+  <div><span class="community-kicker">NOTES FROM THE TABLE</span><h1>Good food<br><em>travels.</em></h1><p>Personal picks, memorable plates and the little places worth telling a friend about.</p></div>
+  <div class="community-aside" aria-hidden="true"><span>FIELD NOTES</span><b>01</b><i>Eat well.<br>Pass it on.</i></div>
+ </header>
+ <section class="community-compose" aria-label="Share a food recommendation"><div id="comp"></div></section>
+ <section class="community-feed-section" aria-label="Community recommendations">
+  <div class="community-feed-heading"><div><span class="community-kicker">THE COMMUNITY EDIT</span><h2>Worth a detour</h2></div><span class="community-feed-note">GOOD THINGS, PASSED AROUND</span></div>
+  <div class="community-feed" id="pg"></div>
+ </section>
 </div>
 </main>
 <footer class="ft"><div class="fw">

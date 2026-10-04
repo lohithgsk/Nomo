@@ -221,9 +221,15 @@ $("um").onclick=e=>{const a=e.target.dataset.a;if(!a)return;if(a==="set")locatio
 
 /* auth: customer or restaurant */
 let role="c";
-function auth(m,r){if(r)role=r;mode=m;if(!$("ad"))return;$("ae").textContent="";
- document.querySelectorAll("#rl .chip").forEach(c=>c.classList.toggle("on",c.dataset.role===role));
- document.querySelectorAll("#mt .chip").forEach(c=>c.classList.toggle("on",c.dataset.m===m));
+function auth(m,r){if(r)role=r;mode=m;if(!$("ad"))return;const dialog=$("ad");dialog.classList.add("auth-dialog");$("ae").textContent="";
+ let head=$("auth-heading");
+ if(!head){head=document.createElement("header");head.className="auth-heading";head.innerHTML='<span class="auth-mark" aria-hidden="true">n.</span><span class="auth-kicker"></span><h2></h2><p></p>';head.id="auth-heading";dialog.insertBefore(head,dialog.firstChild)}
+ const title=role==="r"?(m==="in"?"Welcome back.":"Bring your table to nomo."):(m==="in"?"Welcome back.":"Come hungry.");
+ head.querySelector(".auth-kicker").textContent=role==="r"?"FOR RESTAURANT PARTNERS":"A PLACE AT THE TABLE";
+ head.querySelector("h2").textContent=title;
+ head.querySelector("p").textContent=role==="r"?(m==="in"?"Sign in to manage your restaurant profile and reservations.":"Create your restaurant partner account to join our local dining guide."):(m==="in"?"Sign in to keep your food passport and favorite finds close.":"Create an account to collect stamps and share your favorite finds.");
+ document.querySelectorAll("#rl .chip").forEach(c=>{c.classList.toggle("on",c.dataset.role===role);c.textContent=c.dataset.role==="c"?"DINERS":"RESTAURANT PARTNERS"});
+ document.querySelectorAll("#mt .chip").forEach(c=>{c.classList.toggle("on",c.dataset.m===m);c.textContent=c.dataset.m==="in"?"LOG IN":"CREATE ACCOUNT"});
  $("as").textContent=m==="in"?"Log in":"Create account";
  const f=(id,l,t="text",x="")=>`<div class="${x}"><label for="${id}">${l}</label><input id="${id}" type="${t}" autocomplete="off"></div>`,pw=f("pw","Password (6+ characters)","password","full");let h;
  if(role==="c")h=(m==="up"?f("fn","First name")+f("ln","Last name")+f("ag","Age","number")+`<div><label for="gn">Gender</label><select id="gn"><option>Female</option><option>Male</option><option>Non-binary</option><option>Prefer not to say</option></select></div>`+f("co","Country of residence","text","full"):"")+f("em","Email","email","full")+pw;
@@ -249,13 +255,80 @@ $("as").onclick=async()=>{const v=id=>($(id)?.value||"").trim(),e=$("ae");
 $("cta")?.addEventListener("click",()=>U()?location.href="explore.html":auth("up","c"));
 
 /* explore */
+function setupCityPicker(){
+ const picker=$("city-picker");
+ if(!picker||picker.dataset.ready)return;
+ picker.dataset.ready="1";
+ const trigger=$("city-trigger"),options=$("city-options");
+ const cities=["All","Raleigh","Durham","Charlotte","Cary","Chapel Hill"];
+ const labels=["All cities",...cities.slice(1).map(name=>`${name}, NC`)];
+ const close=focusTrigger=>{
+  picker.classList.remove("open");
+  trigger.setAttribute("aria-expanded","false");
+  if(focusTrigger)trigger.focus();
+ };
+ const open=()=>{
+  picker.classList.add("open");
+  trigger.setAttribute("aria-expanded","true");
+  options.querySelector(`[data-city="${cities.indexOf(city)}"]`)?.focus();
+ };
+ const render=()=>{
+  const selected=cities.indexOf(city);
+  $("city-label").textContent=labels[selected<0?0:selected];
+  options.innerHTML=cities.map((name,index)=>`<button class="city-option ${index===selected?"selected":""}" type="button" role="option" id="city-option-${index}" data-city="${index}" aria-selected="${index===selected}"><span>${esc(labels[index])}</span><i aria-hidden="true">${index===selected?"✓":""}</i></button>`).join("");
+ };
+ const select=index=>{
+  city=cities[index];
+  close(false);
+  explore();
+  trigger.focus();
+ };
+ trigger.addEventListener("click",()=>picker.classList.contains("open")?close(false):open());
+ trigger.addEventListener("keydown",e=>{
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+   e.preventDefault();
+   open();
+  }else if(e.key==="Escape")close(false);
+ });
+ options.addEventListener("click",e=>{
+  const option=e.target.closest("[data-city]");
+  if(option)select(+option.dataset.city);
+ });
+ options.addEventListener("keydown",e=>{
+  const option=e.target.closest("[data-city]");
+  if(!option)return;
+  const index=+option.dataset.city;
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+   e.preventDefault();
+   const step=e.key==="ArrowDown"?1:-1;
+   options.querySelector(`[data-city="${(index+step+cities.length)%cities.length}"]`)?.focus();
+  }else if(e.key==="Home"||e.key==="End"){
+   e.preventDefault();
+   options.querySelector(`[data-city="${e.key==="Home"?0:cities.length-1}"]`)?.focus();
+  }else if(e.key==="Enter"||e.key===" "){
+   e.preventDefault();
+   select(index);
+  }else if(e.key==="Escape"){
+   e.preventDefault();
+   close(true);
+  }
+ });
+ document.addEventListener("click",e=>{if(!picker.contains(e.target))close(false)});
+ render();
+}
 function explore(){const cs=["All",...new Set(R.map(r=>r.c))],q=$("q").value.toLowerCase(),seen=new Set((U()?.st||[]).map(s=>s.id));
+ setupCityPicker();
+ if($("city-options")){
+  const label=$("city-label"),idx=["All","Raleigh","Durham","Charlotte","Cary","Chapel Hill"].indexOf(city);
+  if(label)label.textContent=["All cities","Raleigh, NC","Durham, NC","Charlotte, NC","Cary, NC","Chapel Hill, NC"][Math.max(0,idx)];
+  $("city-options").querySelectorAll("[data-city]").forEach((option,i)=>{option.classList.toggle("selected",i===idx);option.setAttribute("aria-selected",String(i===idx))});
+  $("city-options").querySelectorAll("[data-city] i").forEach((icon,i)=>{icon.textContent=i===idx?"✓":""});
+ }
  $("chips").innerHTML=cs.map(c=>`<button class="chip ${c===cuisine?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
 const f=R.filter(r=>(city==="All"||r.city===city)&&(cuisine==="All"||r.c===cuisine)&&(r.n+r.c+r.a+r.city+r.m.map(m=>m[0]).join()).toLowerCase().includes(q));
 $("rg").innerHTML=f.length?f.map(r=>`<button class="card rest" data-id="${r.id}"><div class="rest-cover"><img class="restaurant-thumb" src="${imageUrl(r.scene.photo,960)}" alt="" loading="lazy"><span class="rest-location">${esc(r.city)}, NC</span><span class="rest-cover-shade"></span><span class="rest-cuisine">${esc(r.c)}</span></div><div class="rest-details"><h3>${esc(r.n)}</h3><p class="rest-meta">${esc(r.a)} · ${r.p} · ★ ${r.s}</p>${seen.has(r.id)?'<span class="tag g">Visited</span>':""}<p class="menu-link">Explore menu <span aria-hidden="true">→</span></p></div></button>`).join(""):'<p class="sub">Nothing matches yet. Try another city, cuisine or search.</p>';
  $("rg").querySelectorAll(".restaurant-thumb").forEach(img=>img.addEventListener("error",()=>img.closest(".rest-cover").classList.add("image-missing"),{once:true}));
 $("chips").onclick=e=>{const b=e.target.closest("[data-c]");if(b){cuisine=b.dataset.c;explore()}};
-$("city").onchange=()=>{city=$("city").value;explore()};
 $("q").oninput=explore;
 $("rg").onclick=e=>{const b=e.target.closest(".rest");if(b)location.href="menu.html?id="+b.dataset.id};
 }
@@ -289,17 +362,16 @@ function initScenePan(hero){
  const image=hero.querySelector(".restaurant-photo");
  if(!image)return;
  let pan=0;
- const setPan=(value,tilt=0)=>{
+ const setPan=value=>{
   pan=Math.max(-8,Math.min(8,value));
   image.style.setProperty("--scene-pan-x",`${pan}%`);
-  image.style.setProperty("--scene-tilt",`${tilt}deg`);
  };
  hero.addEventListener("pointermove",e=>{
   if(e.pointerType!=="mouse")return;
   const bounds=hero.getBoundingClientRect();
   const ratio=Math.max(0,Math.min(1,(e.clientX-bounds.left)/bounds.width));
   const position=ratio*2-1;
-  setPan(position*8,position*1.5);
+  setPan(position*8);
  });
  hero.addEventListener("pointerleave",()=>{
   setPan(0);
@@ -326,22 +398,23 @@ function chg(k,d){const m=cur.m[k];if(cart.rid!==cur.id){if(Object.keys(cart.ite
  const x=cart.items[m[0]]||(cart.items[m[0]]={p:m[1],q:0});x.q+=d;if(x.q<=0)delete cart.items[m[0]];cSave();menuPage()}
 function cq(n,d){const x=cart.items[n];if(!x)return;x.q+=d;if(x.q<=0)delete cart.items[n];if(!Object.keys(cart.items).length)cart.rid=null;cSave();cartPage()}
 function cartPage(){const v=$("v-cart"),it=Object.entries(cart.items);
- if(done){const d=done;v.innerHTML=`<div class="card done"><div style="font-size:4rem">✅</div><h2 class="t" style="font-size:3rem">Order placed</h2><p class="sub" style="margin:10px auto 20px">Order <b>#${d.no}</b> from <b>${esc(d.r)}</b> is being prepared and will be ready in about 25 minutes.${d.stamped?" A new stamp was added to your passport.":""}</p>
+ if(done){const d=done;v.innerHTML=`<div class="cart-page"><div class="cart-success card"><span class="cart-kicker">A GOOD MEAL IS ON ITS WAY</span><div class="order-check" aria-hidden="true">✓</div><h2 class="t">Order placed</h2><p class="sub">Order <b>#${d.no}</b> from <b>${esc(d.r)}</b> is being prepared and will be ready in about 25 minutes.${d.stamped?" A new stamp was added to your passport.":""}</p>
  ${d.items.map(i=>`<div class="sl"><span>${i[1]} × ${esc(i[0])}</span><span>${money(i[1]*i[2])}</span></div>`).join("")}<div class="sl t"><span>Total paid</span><span>${money(d.total)}</span></div>
- <p style="margin-top:22px"><a class="btn" href="passport.html" style="text-decoration:none;display:inline-block">View my passport</a> <a class="btn o" href="explore.html" style="text-decoration:none;display:inline-block">Keep exploring</a></p></div>`;return}
- if(!it.length){v.innerHTML=`<h2 class="t">Your cart</h2><p class="sub">Your cart is empty. Open a restaurant menu and add dishes.</p><a class="btn" href="explore.html" style="text-decoration:none;display:inline-block">Browse restaurants</a>`;return}
+ <p class="cart-success-actions"><a class="btn" href="passport.html">View my passport</a> <a class="btn o" href="explore.html">Keep exploring</a></p></div></div>`;return}
+ if(!it.length){v.innerHTML=`<div class="cart-page"><header class="cart-heading"><span class="cart-kicker">A TABLE FOR YOUR CRAVINGS</span><h2 class="t">Your cart</h2></header><section class="cart-empty"><span class="empty-plate" aria-hidden="true">✳</span><span class="cart-kicker">NOTHING ON THE TABLE YET</span><h3>Something delicious is waiting.</h3><p>Explore the neighborhood, find a new favorite and bring a little something back.</p><a class="btn" href="explore.html">Explore restaurants <span aria-hidden="true">→</span></a></section></div>`;return}
  const r=R[cart.rid],b=bill();
- v.innerHTML=`<h2 class="t">Your cart</h2><p class="sub">From <b>${esc(r.n)}</b>, ${AD[r.id]}, ${r.a}</p><div class="cg"><div>
- ${it.map(([n,x])=>`<div class="ci"><div class="cie">${r.e}</div><div><h3>${esc(n)}</h3><small style="color:var(--mut)">${money(x.p)} each</small></div><div class="cq"><button data-cq="${esc(n)}|-1" aria-label="Remove one">−</button><b>${x.q}</b><button data-cq="${esc(n)}|1" aria-label="Add one">+</button></div><b class="lp">${money(x.p*x.q)}</b></div>`).join("")}
- <p style="margin-top:16px"><a href="menu.html?id=${r.id}" style="color:var(--red);font-weight:800">+ Add more from ${esc(r.n)}</a></p></div>
- <aside class="card sum"><h3 style="margin-bottom:12px">Order summary</h3>
+ v.innerHTML=`<div class="cart-page"><header class="cart-heading"><span class="cart-kicker">YOUR ORDER, THOUGHTFULLY GATHERED</span><h2 class="t">Your cart</h2><p>From <b>${esc(r.n)}</b><span class="cart-dot">·</span>${esc(r.a)}, ${esc(r.city)}</p></header><div class="cg"><section class="cart-items">
+ <div class="cart-section-heading"><span>ON THE TABLE</span><b>${it.reduce((total,[,item])=>total+item.q,0)} items</b></div>
+ ${it.map(([n,x])=>{const dishIndex=r.m.findIndex(m=>m[0]===n);return`<article class="ci"><div class="cie"><img src="${dishPhoto(r,n,Math.max(0,dishIndex))}" alt="${esc(n)}" loading="lazy"></div><div class="cart-item-copy"><h3>${esc(n)}</h3><small>${money(x.p)} each</small></div><div class="cq"><button data-cq="${esc(n)}|-1" aria-label="Remove one ${esc(n)}">−</button><b>${x.q}</b><button data-cq="${esc(n)}|1" aria-label="Add one ${esc(n)}">+</button></div><b class="lp">${money(x.p*x.q)}</b></article>`}).join("")}
+ <p class="cart-add-more"><a href="menu.html?id=${r.id}"><span aria-hidden="true">＋</span> Add another dish from ${esc(r.n)}</a></p></section>
+ <aside class="card sum"><span class="cart-kicker">AT A GLANCE</span><h3>Order summary</h3>
  ${it.map(([n,x])=>`<div class="sl"><span>${x.q} × ${esc(n)}</span><span>${money(x.p*x.q)}</span></div>`).join("")}
- <div class="sl" style="border-top:1px solid var(--line);margin-top:8px;padding-top:10px"><span>Subtotal</span><span>${money(b.sub)}</span></div>
+ <div class="sl cart-subtotal"><span>Subtotal</span><span>${money(b.sub)}</span></div>
  <div class="sl"><span>Sales tax (7.25%)</span><span>${money(b.tax)}</span></div><div class="sl"><span>Service fee</span><span>${money(FEE)}</span></div>
  <div class="sl"><span>Tip</span><span>${money(b.tp)}</span></div>
- <div class="rowc" style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">${[0,.1,.15,.2].map(p=>`<button class="chip ${p===tip?"on":""}" data-tip="${p}">${p?p*100+"%":"No tip"}</button>`).join("")}</div>
+ <div class="tip-heading"><span>Leave a little extra?</span><small>Choose a tip</small></div><div class="rowc tip-options">${[0,.1,.15,.2].map(p=>`<button class="chip ${p===tip?"on":""}" data-tip="${p}">${p?p*100+"%":"No tip"}</button>`).join("")}</div>
  <div class="sl t"><span>Total</span><span>${money(b.total)}</span></div>
- <button class="btn" id="po" style="width:100%;margin-top:14px">Place order</button><p style="color:var(--mut);font-size:.8rem;margin:10px 0 0">Demo only: no real payment is taken.</p></aside></div>`}
+ <button class="btn" id="po">Place order <span aria-hidden="true">→</span></button><p class="cart-demo-note">Demo checkout · no payment will be taken</p></aside></div></div>`}
 function order(){const u=U();if(!u)return rme?toast("Log in as a customer to order"):auth("in","c");
  const r=R[cart.rid],b=bill(),stamped=u.st.length<25,bf=lvl(u.st.length);
  done={no:"NM-"+Math.floor(1e4+Math.random()*9e4),r:r.n,items:Object.entries(cart.items).map(([n,x])=>[n,x.q,x.p]),total:b.total,stamped};
@@ -449,8 +522,9 @@ function passport(){const u=U(),v=$("v-passport");
 
 /* community */
 function community(){const u=U();
- $("comp").innerHTML=u?`<h3 style="margin-bottom:12px">Start a conversation</h3><div class="f2"><div><label for="pr">Restaurant</label><select id="pr">${R.map(r=>`<option>${r.n}</option>`).join("")}</select></div><div><label for="pd">Dish you loved</label><input id="pd"></div><div class="full"><label for="pt">Why should people try it?</label><textarea id="pt" rows="2"></textarea></div></div><p style="margin:12px 0 0"><button class="btn" id="pb">Share</button></p>`:`<h3>Join the conversation</h3><p class="sub" style="margin:8px 0 14px">Log in to post, reply and like.</p><button class="btn" onclick="auth('in')">Log in</button>`;
- $("pg").innerHTML=posts.map(p=>{const on=me&&p.by.includes(me);return`<article class="card post"><small style="color:var(--red);font-weight:800">${esc(p.u)} recommends</small><h3>${esc(p.d)}</h3><small style="color:var(--mut)">at ${esc(p.r)}</small><p>${esc(p.t)}</p>${p.re.map(r=>`<div class="rep"><b>${esc(r.u)}:</b> ${esc(r.t)}</div>`).join("")}<div class="acts"><button class="sm ${on?"on":""}" data-l="${p.id}" aria-pressed="${!!on}">♥ ${p.b+p.by.length}</button><button class="sm" data-r="${p.id}">💬 Reply</button></div></article>`}).join("")}
+ $("comp").innerHTML=u?`<div class="compose-heading"><span class="community-kicker">YOUR TASTE, YOUR WORDS</span><h2>Leave a little love note.</h2><p>Tell the next food explorer what made the meal memorable.</p></div><div class="compose-fields"><div><label for="pr">The place</label><select id="pr">${R.map(r=>`<option>${esc(r.n)}</option>`).join("")}</select></div><div><label for="pd">The dish</label><input id="pd" placeholder="What did you order?"></div><div class="compose-note"><label for="pt">The reason to go</label><textarea id="pt" rows="3" placeholder="A flavor, a moment, a detail you still think about…"></textarea></div></div><div class="compose-footer"><span>GOOD RECOMMENDATIONS DESERVE TO BE SHARED.</span><button class="btn" id="pb">Share your note <span aria-hidden="true">→</span></button></div>`:`<div class="compose-heading"><span class="community-kicker">PULL UP A CHAIR</span><h2>Good finds are better shared.</h2><p>Join the table to leave a recommendation, reply to a fellow explorer or save a favorite with a like.</p><button class="btn" onclick="auth('in')">Log in to join the table <span aria-hidden="true">→</span></button></div>`;
+ $("pg").innerHTML=posts.map((p,index)=>{const on=me&&p.by.includes(me),r=R.find(x=>x.n===p.r),dishIndex=r?r.m.findIndex(m=>m[0]===p.d):0,photo=r?dishPhoto(r,p.d,Math.max(0,dishIndex)):imageUrl(FOOD_PHOTOS.greens[0],900),initials=p.u.split(/\s+/).map(x=>x[0]).slice(0,2).join("");return`<article class="community-post ${index===0?"featured":""}"><div class="community-post-photo"><img src="${photo}" alt="${esc(p.d)} at ${esc(p.r)}" loading="lazy"><span>FIELD NOTE · ${String(index+1).padStart(2,"0")}</span></div><div class="community-post-content"><div class="community-author"><span class="community-avatar" aria-hidden="true">${esc(initials)}</span><div><b>${esc(p.u)}</b><small>RECOMMENDS</small></div></div><h3>${esc(p.d)}</h3><p class="community-place">${esc(p.r)}</p><blockquote>${esc(p.t)}</blockquote>${p.re.map(r=>`<div class="rep"><b>${esc(r.u)}:</b> ${esc(r.t)}</div>`).join("")}<div class="acts"><button class="sm ${on?"on":""}" data-l="${p.id}" aria-pressed="${!!on}" aria-label="Like ${esc(p.d)} recommendation">♥ <span>${p.b+p.by.length}</span></button><button class="sm" data-r="${p.id}" aria-label="Reply to ${esc(p.u)}">Reply <span aria-hidden="true">↗</span></button></div></div></article>`}).join("");
+ $("pg").querySelectorAll(".community-post-photo img").forEach(img=>img.addEventListener("error",()=>{img.closest(".community-post-photo").classList.add("image-missing");img.remove()},{once:true}))}
 document.addEventListener("click",e=>{const t=e.target;
  if(t.id==="pb"){const d=$("pd").value.trim(),x=$("pt").value.trim();if(!d||!x)return toast("Add a dish and a short reason");const u=U();posts.unshift({id:Date.now(),u:u.fn+" "+u.ln[0]+".",r:$("pr").value,d,t:x,by:[],b:0,re:[]});sv("nomo_posts",posts);community();toast("Posted")}
  if(t.dataset.l){if(!me)return auth("in");const p=posts.find(p=>p.id==t.dataset.l),i=p.by.indexOf(me);i<0?p.by.push(me):p.by.splice(i,1);sv("nomo_posts",posts);community()}
