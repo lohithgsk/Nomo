@@ -214,7 +214,10 @@ $("th").onclick=()=>{theme(document.documentElement.dataset.theme==="dark"?"ligh
 theme(ld("nomo_theme",matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"));
 
 /* account menu */
-function menu(){const u=U(),r=rests[rme];$("um").innerHTML=r?`<p><b>${esc(r.n)}</b><br>Code ${esc(r.code)}</p><button data-a="dash">🏪 Dashboard</button><button data-a="out">🚪 Sign out</button>`:u?`<p><b>${esc(u.fn)} ${esc(u.ln)}</b><br>${esc(u.email)}</p><button data-a="set">⚙️ Settings</button><button data-a="out">🚪 Sign out</button>`:`<p>Not signed in</p><button data-a="in">Log in</button><button data-a="up">Sign up</button>`}
+function menu(){
+ const u=U(),r=rests[rme];
+ const badge=(name)=>String(name||"N").split(/\s+/).map(x=>x[0]).slice(0,2).join("").toUpperCase();
+ $("um").innerHTML=r?`<div class="account-card"><span class="account-avatar">${esc(badge(r.n))}</span><div><b>${esc(r.n)}</b><small>PARTNER ACCOUNT · ${esc(r.code)}</small></div></div><span class="account-divider"></span><button data-a="dash"><span>Restaurant dashboard</span><i aria-hidden="true">↗</i></button><button data-a="out" class="account-signout"><span>Sign out</span><i aria-hidden="true">→</i></button>`:u?`<div class="account-card"><span class="account-avatar">${esc(badge(u.fn+" "+u.ln))}</span><div><b>${esc(u.fn)} ${esc(u.ln)}</b><small>${esc(u.email)}</small></div></div><span class="account-divider"></span><button data-a="set"><span>Settings</span><i aria-hidden="true">↗</i></button><button data-a="out" class="account-signout"><span>Sign out</span><i aria-hidden="true">→</i></button>`:`<div class="account-card account-guest"><span class="account-avatar">N</span><div><b>Your nomo account</b><small>Not signed in</small></div></div><span class="account-divider"></span><button data-a="in"><span>Log in</span><i aria-hidden="true">→</i></button><button data-a="up"><span>Create an account</span><i aria-hidden="true">→</i></button>`}
 $("ub").onclick=e=>{e.stopPropagation();menu();$("um").classList.toggle("open")};
 addEventListener("click",()=>$("um").classList.remove("open"));
 $("um").onclick=e=>{const a=e.target.dataset.a;if(!a)return;if(a==="set")location.href="profile.html";else if(a==="dash")location.href="dash.html";else if(a==="out"){me=null;rme=null;sv("nomo_me",null);sv("nomo_rme",null);location.reload()}else auth(a,"c")};
@@ -339,7 +342,7 @@ const days=()=>[0,1,2].map(d=>{const x=new Date();x.setDate(x.getDate()+d);retur
 const slotsFor=(id,d)=>Array.from({length:10},(_,i)=>{const m=1020+i*30,h=Math.floor(m/60);return{t:`${h>12?h-12:h}:${m%60?"30":"00"} PM`,full:(id*7+d*3+i*5)%4===0}});
 function menuPage(){const id=+new URLSearchParams(location.search).get("id"),r=R[id],v=$("v-menu");if(!r){location.href="explore.html";return}
  if(cur!==r){cur=r;rsv={open:false,d:0,sz:2,t:null}}
- const base=T[id%T.length],t=document.documentElement.dataset.theme==="dark"?{...base,bg:"#121b17",ink:"#edf4ed",soft:"#26382f",bt:"#111916"}:base,it=cart.rid===id?cart.items:{},ds=days(),sl=slotsFor(id,rsv.d),has=Object.keys(cart.items).length,scene=r.scene;
+ const base=T[id%T.length],dark=document.documentElement.dataset.theme==="dark",t=dark?{...base,bg:"#171514",ink:"#f0e9e2",soft:"#29211f",bt:"#211b19",acc:"#d28d70"}:{...base,bg:"#f5f1e9",ink:"#302620",soft:"#e9e0d4",bt:"#fffdf8"},it=cart.rid===id?cart.items:{},ds=days(),sl=slotsFor(id,rsv.d),has=Object.keys(cart.items).length,scene=r.scene;
  v.innerHTML=`<div class="mp" data-scene="${r.foodStyle}" style="--mbg:${t.bg};--mi:${t.ink};--ma:${t.acc};--soft:${t.soft};--bt:${t.bt};--mf:'${t.font}',Georgia,serif;background:radial-gradient(circle at 10% 100%,${t.soft},transparent 42%),${t.bg}">
  <section class="restaurant-hero" id="restaurant-hero" tabindex="0" role="region" aria-label="Interactive ${esc(r.c)} restaurant photo. Move your pointer across the image to pan or use the left and right arrow keys.">
   <img class="restaurant-photo" src="${imageUrl(scene.photo,1800)}" alt="${esc(r.c)} food and restaurant atmosphere at ${esc(r.n)}" fetchpriority="high">
@@ -503,22 +506,22 @@ function flipBook(d){const u=U();if(!u||flipping)return;const ns=bs+d;if(ns<0||n
 
 /* passport */
 function passport(){const u=U(),v=$("v-passport");
- if(!u){v.innerHTML=`<h2 class="t">Your Food Passport</h2><p class="sub">Log in or sign up as a customer to receive your passport and start collecting stamps.</p><button class="btn" onclick="auth('up','c')">Get my passport</button>`;return}
+ if(!u){v.innerHTML=`<div class="passport-page"><header class="passport-heading"><span class="passport-kicker">YOUR TABLE, YOUR TRAIL</span><h1>Your Food<br><em>Passport.</em></h1><p>A little record of everywhere delicious has taken you. Sign in to collect your stamps and keep exploring.</p><button class="btn" onclick="auth('up','c')">Start your passport <span aria-hidden="true">→</span></button></header><div class="passport-guest-card"><span class="passport-medallion" aria-hidden="true">✳</span><span class="passport-kicker">A KEEPSAKE OF GOOD TASTE</span><h2>Every visit leaves a mark.</h2><p>Collect a unique stamp each time you order. Your next favorite place is only a page away.</p></div></div>`;return}
  const n=u.st.length,tried=new Set(u.st.map(s=>s.id)).size,i=lvl(n),nx=LV[i+1],nm=s=>s.toUpperCase().replace(/[^A-Z]/g,""),my=res.filter(x=>x.user===me);
- v.innerHTML=`<h2 class="t">Your Food Passport</h2><p class="sub">Your identity as a food explorer.</p>
+ v.innerHTML=`<div class="passport-page"><header class="passport-heading"><span class="passport-kicker">YOUR TABLE, YOUR TRAIL</span><h1>Your Food<br><em>Passport.</em></h1><p>Your personal record of good meals, new places and the flavors worth remembering.</p><div class="passport-stats"><div><b>${n}</b><span>STAMP${n===1?"":"S"} COLLECTED</span></div><div><b>${tried}</b><span>PLACES VISITED</span></div><div><b>${i<0?"Newcomer":LV[i][0]}</b><span>CURRENT RANK</span></div></div></header>
  <div class="book"><div class="cover"><div><span class="cm">🍴</span><br><small>NOMO</small><h3>WORLD<br>FOOD<br>PASSPORT</h3><small>✦ ✦ ✦</small></div></div>
  <div class="page"><div class="ph2"><b>NOMO WORLD PASSPORT</b><span>Type P · Code NMO</span></div>
  <div class="pb"><div class="pic">${esc(u.fn[0])}${esc(u.ln[0])}</div><div class="pf">
  <div><small>SURNAME</small><b>${esc(u.ln)}</b></div><div><small>GIVEN NAMES</small><b>${esc(u.fn)}</b></div><div><small>AGE</small><b>${u.ag}</b></div><div><small>SEX</small><b>${esc(u.gn)}</b></div>
  <div><small>COUNTRY OF RESIDENCE</small><b>${esc(u.co)}</b></div><div><small>RESTAURANTS TRIED</small><b>${tried}</b></div><div><small>PASSPORT NO.</small><b>${u.no}</b></div><div><small>DATE OF ISSUE</small><b>${esc(u.iss||"2026")}</b></div><div><small>LEVEL</small><b>${i<0?"Newcomer":LV[i][0]}</b></div></div></div>
  <div class="mrz2">P&lt;NMO${nm(u.ln)}&lt;&lt;${nm(u.fn)}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>${u.no}&lt;NMO${String(u.ag).padStart(3,"0")}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div><div class="seal">VALID</div></div></div>
- <h2 class="t" style="margin-top:50px;font-size:2.4rem">Stamps collected</h2><p class="sub">Every order earns an ink stamp with the date you visited. Each restaurant has its own.</p>
+ <section class="passport-section"><div class="passport-section-heading"><span class="passport-kicker">LITTLE MEMENTOS</span><h2>Stamps collected</h2><p>Every order earns its own mark. Each restaurant leaves a different impression.</p></div>
  <div class="visa"><div class="stamps">${Array.from({length:25},(_,k)=>{const s=u.st[k];return s?`<div class="sst ${k===n-1?"new":""}" title="${esc(s.n)}, ${fd(s)}" style="transform:rotate(${k*53%30-15}deg)">${stamp(s.id,fd(s),"g"+k)}</div>`:`<div class="slot">${k+1}</div>`}).join("")}</div></div>
- <h2 class="t" style="margin-top:50px;font-size:2.4rem">Your passport book</h2><p class="sub">Flip through the pages to see your stamps the way they would look in a real passport.</p>
+ </section><section class="passport-section"><div class="passport-section-heading"><span class="passport-kicker">BETWEEN THE COVERS</span><h2>Your passport book</h2><p>Flip through the pages to see your stamps gathered in one place.</p></div>
  <div id="bkroot">${bookHtml(u,true)}</div>
- <h2 class="t" style="margin-top:50px;font-size:2.4rem">Food Roadmap</h2><p class="sub">${nx?`${nx[1]-n} more stamp${nx[1]-n>1?"s":""} to reach ${nx[0]}.`:"You completed the expedition."}</p>
- <div class="prog"><i style="width:${n/25*100}%"></i></div><div class="lv">${LV.map((l,k)=>`<div class="${k<i?"done":k===i?"now":""}"><b>${l[0]}</b><br><small>${l[1]} stamps</small></div>`).join("")}</div>
- <h2 class="t" style="margin-top:50px;font-size:2.4rem">Table reservations</h2>${my.length?my.map(x=>`<div class="rv"><b>${esc(x.rn)}</b><span>${esc(x.date)}, ${esc(x.t)} · party of ${x.sz}</span></div>`).join(""):'<p class="sub">No reservations yet. Open a restaurant menu and tap Reserve a table.</p>'}`}
+ </section><section class="passport-section"><div class="passport-section-heading"><span class="passport-kicker">YOUR NEXT MILESTONE</span><h2>Food roadmap</h2><p>${nx?`${nx[1]-n} more stamp${nx[1]-n>1?"s":""} to reach ${nx[0]}.`:"You completed the expedition."}</p></div>
+ <div class="prog"><i style="width:${n/25*100}%"></i></div><div class="lv">${LV.map((l,k)=>`<div class="${k<i?"done":k===i?"now":""}"><b>${l[0]}</b><br><small>${l[1]} stamps</small></div>`).join("")}</div></section>
+ <section class="passport-section"><div class="passport-section-heading"><span class="passport-kicker">THE NEXT TABLE</span><h2>Reservations</h2><p>Your upcoming and recent plans.</p></div>${my.length?my.map(x=>`<div class="rv"><b>${esc(x.rn)}</b><span>${esc(x.date)}, ${esc(x.t)} · party of ${x.sz}</span></div>`).join(""):'<p class="sub">No reservations yet. Open a restaurant menu and tap Reserve a table.</p>'}</section></div>`}
 
 /* community */
 function community(){const u=U();
@@ -531,17 +534,99 @@ document.addEventListener("click",e=>{const t=e.target;
  if(t.dataset.r){if(!me)return auth("in");const x=prompt("Your reply");if(x&&x.trim()){posts.find(p=>p.id==t.dataset.r).re.push({u:U().fn,t:x.trim()});sv("nomo_posts",posts);community()}}});
 
 /* settings */
-function settings(){const u=U(),v=$("v-settings");if(!u){v.innerHTML=`<h2 class="t">Settings</h2><p class="sub">Log in to see and edit your details.</p><button class="btn" onclick="auth('in')">Log in</button>`;return}
+function settings(){const u=U(),v=$("v-settings");if(!u){v.innerHTML=`<div class="settings-page"><header class="settings-heading"><span class="settings-kicker">YOUR NOMO ACCOUNT</span><h1>Make yourself<br><em>at home.</em></h1><p>Sign in to review and update the details on your food passport.</p><button class="btn" onclick="auth('in')">Log in <span aria-hidden="true">→</span></button></header></div>`;return}
  const f=(id,l,val,t="text")=>`<div><label for="s${id}">${l}</label><input id="s${id}" type="${t}" value="${esc(val)}"></div>`;
- v.innerHTML=`<h2 class="t">Settings</h2><p class="sub">Update the details shown on your passport.</p><div class="card"><div class="f2">${f("fn","First name",u.fn)}${f("ln","Last name",u.ln)}${f("ag","Age",u.ag,"number")}<div><label for="sgn">Gender</label><select id="sgn">${["Female","Male","Non-binary","Prefer not to say"].map(g=>`<option ${g===u.gn?"selected":""}>${g}</option>`).join("")}</select></div>${f("co","Country of residence",u.co)}<div><label for="sem">Email used to sign up</label><input id="sem" value="${esc(u.email)}" readonly></div></div><p style="margin:16px 0 0"><button class="btn" id="ss">Save changes</button></p></div>`;
+ v.innerHTML=`<div class="settings-page"><header class="settings-heading"><span class="settings-kicker">YOUR NOMO ACCOUNT</span><h1>Make yourself<br><em>at home.</em></h1><p>Keep the details on your food passport up to date.</p></header><div class="settings-layout"><aside class="settings-profile"><span class="settings-avatar">${esc(u.fn[0])}${esc(u.ln[0])}</span><span class="settings-kicker">FOOD EXPLORER</span><h2>${esc(u.fn)} ${esc(u.ln)}</h2><p>${esc(u.email)}</p><a href="passport.html">View your passport <span aria-hidden="true">↗</span></a></aside><section class="settings-form"><div class="settings-form-heading"><div><span class="settings-kicker">PERSONAL DETAILS</span><h2>Your information</h2></div><span class="settings-edit-note">Changes appear on your passport</span></div><div class="f2">${f("fn","First name",u.fn)}${f("ln","Last name",u.ln)}${f("ag","Age",u.ag,"number")}<div><label for="sgn">Gender</label><select id="sgn">${["Female","Male","Non-binary","Prefer not to say"].map(g=>`<option ${g===u.gn?"selected":""}>${g}</option>`).join("")}</select></div>${f("co","Country of residence",u.co)}<div class="full"><label for="sem">Email used to sign up</label><input id="sem" value="${esc(u.email)}" readonly></div></div><p class="settings-save"><button class="btn" id="ss">Save changes <span aria-hidden="true">→</span></button></p></section></div></div>`;
  $("ss").onclick=()=>{const g=id=>$("s"+id).value.trim();if(!g("fn")||!g("ln")||!g("co")||!(+g("ag")>0))return toast("Fill in every field");Object.assign(u,{fn:g("fn"),ln:g("ln"),ag:+g("ag"),gn:$("sgn").value,co:g("co")});sv("nomo_users",users);toast("Changes saved")}}
 
 /* scroll-driven food ring */
 const ring=$("ring");
 if(ring){
- "🍕🍣🥑🌮🍜🥐🍩🍓🥗🍔".split(/(?=\S)/u).forEach((e,i,a)=>{const s=document.createElement("span");s.textContent=e;s.style.transform=`rotate(${i*360/a.length}deg) translateY(-${window.innerWidth<500?130:190}px)`;ring.appendChild(s)});
+ const dishes=["photo-1574071318508-1cdbab80d002","photo-1563245372-f21724e3856d","photo-1603894584373-5ac82b2ae398","photo-1565299507177-b0ac66763828","photo-1512621776951-a57141f2eefd","photo-1544025162-d76694265947","photo-1540189549336-e6e99c3679fe","photo-1555126634-323283e090fa"];
+ dishes.forEach((photo,i)=>{const s=document.createElement("span"),img=document.createElement("img");s.style.transform=`rotate(${i*360/dishes.length}deg) translateY(-${window.innerWidth<500?132:190}px)`;img.src=`https://images.unsplash.com/${photo}?auto=format&fit=crop&w=240&q=78`;img.alt="";img.loading="lazy";s.appendChild(img);ring.appendChild(s)});
  let k=0;addEventListener("scroll",()=>{if(!k){k=1;requestAnimationFrame(()=>{ring.style.transform=`rotate(${scrollY*.25}deg)`;k=0})}},{passive:true});
 }
+
+const worldDestinations={
+ mexico:["Oaxaca · Mexico","Oaxaca","Mole negro","A deep, slow-built sauce layered with chiles, toasted spices and a little chocolate."],
+ "new-york":["New York · United States","New York","New York–style pizza","A wide, foldable slice with a crisp base, bright tomato and bubbling cheese."],
+ "new-orleans":["Louisiana · United States","New Orleans","Gumbo","A slow-simmered roux with layered spice, local seafood and Creole tradition."],
+ peru:["Lima · Peru","Lima","Ceviche","Fresh fish cured in citrus with ají, red onion and a bright leche de tigre."],
+ senegal:["Dakar · Senegal","Dakar","Thieboudienne","Senegal's celebrated rice and fish, cooked with tomato and vegetables."],
+ morocco:["Marrakech · Morocco","Marrakech","Chicken tagine","Tender chicken, preserved lemon and olives gently cooked with warm spices."],
+ italy:["Campania · Italy","Naples","Pizza Margherita","A blistered Neapolitan crust, sweet tomato, milky mozzarella and basil."],
+ lebanon:["Beirut · Lebanon","Beirut","Mezze & hummus","Velvety chickpea hummus, olive oil and a table made for sharing."],
+ india:["Delhi · India","Delhi","Butter chicken","Tandoor-kissed chicken in a gently spiced tomato and butter sauce."],
+ thailand:["Bangkok · Thailand","Bangkok","Pad Thai","Tamarind-bright noodles wok-tossed with peanuts, lime and fresh herbs."],
+ "south-korea":["Seoul · South Korea","Seoul","Bibimbap","A colorful bowl of rice, seasonal vegetables, gochujang and a sizzling finish."],
+ japan:["Tokyo · Japan","Tokyo","Edomae sushi","Seasoned rice and carefully prepared seafood, shaped by craft and season."],
+ france:["Île-de-France · France","Paris","Butter croissant","Laminated pastry with delicate crisp layers and a tender, buttery center."]
+};
+const mapTrack=$("world-map-track"),mapTemplate=mapTrack?.querySelector(".world-map"),worldDetail=$("world-detail");
+if(mapTrack&&mapTemplate){
+ const repeat=mapTemplate.cloneNode(true);
+ repeat.setAttribute("aria-hidden","true");
+ repeat.querySelectorAll("button").forEach(button=>{
+  const marker=document.createElement("span");
+  marker.className=button.className;marker.dataset.destination=button.dataset.destination;
+  marker.dataset.code=button.dataset.code;marker.style.cssText=button.style.cssText;
+  marker.setAttribute("aria-hidden","true");button.replaceWith(marker);
+ });
+ mapTrack.appendChild(repeat);
+}
+const hideWorldDestination=()=>{
+ if(worldDetail)worldDetail.hidden=true;
+ document.querySelectorAll(".world-marker").forEach(marker=>{
+  if(marker instanceof HTMLButtonElement)marker.setAttribute("aria-pressed","false");
+  marker.classList.remove("is-active");
+ });
+};
+const showWorldDestination=(button,select=false)=>{
+ const place=worldDestinations[button.dataset.destination];
+ if(!place)return;
+ if(select)document.querySelectorAll(".world-marker").forEach(marker=>{
+  const active=marker.dataset.destination===button.dataset.destination;
+  if(marker instanceof HTMLButtonElement)marker.setAttribute("aria-pressed",String(active));
+  marker.classList.toggle("is-active",active);
+ });
+ $("world-region").textContent=place[0];$("world-city").textContent=place[1];$("world-food").textContent=place[2];$("world-description").textContent=place[3];
+ if(worldDetail)worldDetail.hidden=false;
+};
+const worldExperience=worldDetail?.closest(".world-experience");
+const nearestWorldMarker=(x,y)=>{
+ const globe=worldExperience?.querySelector(".world-globe"),bounds=globe?.getBoundingClientRect();
+ if(!bounds)return null;
+ let nearest=null,nearestDistance=Infinity;
+ mapTrack?.querySelectorAll(".world-marker").forEach(marker=>{
+  const rect=marker.getBoundingClientRect(),centerX=rect.left+rect.width/2,centerY=rect.top+rect.height/2;
+  if(centerX<bounds.left||centerX>bounds.right||centerY<bounds.top||centerY>bounds.bottom)return;
+  const distance=(centerX-x)**2+(centerY-y)**2;
+  if(distance<nearestDistance){nearest=marker;nearestDistance=distance}
+ });
+ return nearest;
+};
+worldExperience?.addEventListener("pointermove",event=>{
+ if(event.pointerType!=="mouse")return;
+ const marker=event.target.closest(".world-marker");
+ if(marker){showWorldDestination(nearestWorldMarker(event.clientX,event.clientY)||marker,true);return}
+ if(event.target.closest("#world-detail")||document.activeElement?.matches(".world-marker"))return;
+ hideWorldDestination();
+});
+worldExperience?.addEventListener("pointerleave",event=>{
+ if(event.pointerType==="mouse"&&!worldExperience.contains(document.activeElement))hideWorldDestination();
+});
+worldExperience?.addEventListener("focusin",event=>{
+ const marker=event.target.closest(".world-marker");
+ if(marker)showWorldDestination(marker,true);
+});
+worldExperience?.addEventListener("focusout",event=>{
+ if(!worldExperience.contains(event.relatedTarget))hideWorldDestination();
+});
+mapTrack?.addEventListener("click",event=>{
+ const marker=event.target.closest(".world-marker");
+ if(marker)showWorldDestination(nearestWorldMarker(event.clientX,event.clientY)||marker,true);
+ else hideWorldDestination();
+});
 
 /* cart badge on load + a one-time welcome toast after a redirecting login */
 cSave();
