@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settings | nomo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600&family=Nunito:wght@400;600;800&family=Cormorant+Garamond:wght@500;600&family=DM+Serif+Display&family=Jost:wght@300;400;500&family=Lora:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav>
+ <a class="logo" href="index.html">nomo<i>.</i></a>
+ <div class="links"><a href="explore.html">Explore</a><a href="passport.html">Passport</a><a href="community.html">Community</a></div>
+ <div class="right">
+  <a class="ib" id="cb" href="cart.html" aria-label="Open cart" style="position:relative;text-decoration:none">🛒<span class="bdg" id="cn" style="display:none">0</span></a>
+  <button class="ib" id="th" aria-label="Toggle light or dark theme">🌙</button>
+  <button class="ib" id="ub" aria-label="Account menu" aria-haspopup="true">👤</button>
+  <div class="menu" id="um"></div>
+ </div>
+</nav>
+
+<main>
+<div class="view" id="v-settings"></div>
+</main>
+<footer class="ft"><div class="fw">
+ <div><a class="logo" href="index.html">nomo<i>.</i></a><p>nomo is a product in active development. We keep improving it, and new updates will be released regularly.</p></div>
+ <div><b>Explore nomo</b><a href="index.html">About nomo</a><a href="explore.html">Explore</a><a href="passport.html">Passport</a><a href="community.html">Community</a></div>
+ <div><b>Your account</b><button class="fl" data-f="in">Customer login</button><button class="fl" data-f="rest">For restaurants</button><a href="profile.html">Settings</a></div>
+</div><div class="fb"><span>© 2026 nomo. All rights reserved.</span><span>Made with appetite in Raleigh, NC</span></div></footer>
+
+<dialog id="ad"><div class="tabs" id="rl"><button class="chip on" data-role="c">🍽️ Customer</button><button class="chip" data-role="r">🏪 Restaurant</button></div><div class="tabs" id="mt"><button class="chip on" data-m="in">Log in</button><button class="chip" data-m="up">Sign up</button></div>
+ <div class="f2" id="af"></div><p class="err" id="ae" role="alert"></p>
+ <div style="display:flex;gap:10px"><button class="btn" id="as">Log in</button><button class="btn o" id="ax">Cancel</button></div></dialog>
+<div class="toast" id="ts" role="status"></div>
+
+<script src="js/app.js"></script>
+<script>settings();</script>
+</body>
+</html>
