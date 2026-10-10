@@ -41,17 +41,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          rm -rf ci-metrics
-          git clone --quiet --depth 1 --branch ci-metrics "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-metrics || {
-            mkdir ci-metrics
-            cd ci-metrics
+          metrics_dir="$RUNNER_TEMP/ci-metrics"
+          rm -rf "$metrics_dir"
+          git clone --quiet --depth 1 --branch ci-metrics "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$metrics_dir" || {
+            mkdir -p "$metrics_dir"
+            cd "$metrics_dir"
             git init -q
             git checkout -q --orphan ci-metrics
             git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           }
-          cp test-results/ci-tests.json ci-metrics/ci-tests.json
-          cp test-results/ci-coverage.json ci-metrics/ci-coverage.json
-          cd ci-metrics
+          cp "$GITHUB_WORKSPACE/test-results/ci-tests.json" "$metrics_dir/ci-tests.json"
+          cp "$GITHUB_WORKSPACE/test-results/ci-coverage.json" "$metrics_dir/ci-coverage.json"
+          cd "$metrics_dir"
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add ci-tests.json ci-coverage.json
