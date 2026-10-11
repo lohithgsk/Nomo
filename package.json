@@ -1,8 +1,12 @@
 {
   "private": true,
   "scripts": {
+    "start": "http-server apps/web -p 3000 -c-1",
+    "dev": "http-server apps/web -p 3000 -c-1",
     "test": "playwright test",
-    "test:ci": "playwright test"
+    "test:ci": "playwright test",
+    "docs": "sphinx-build -b html docs docs/_build/html",
+    "docs:serve": "http-server docs/_build/html -p 8085 -c-1"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.0",

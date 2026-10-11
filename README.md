@@ -51,9 +51,24 @@ Before opening a PR, read [`CONTRIBUTING.md`](./CONTRIBUTING.md) — it covers b
 
 ## Documentation
 
+Comprehensive technical documentation is built with Sphinx:
+
+* **Build documentation locally:**
+  ```bash
+  npm run docs
+  ```
+* **Serve documentation locally:**
+  ```bash
+  npm run docs:serve
+  ```
+  Then view at `http://localhost:8085`.
+
+Key documentation chapters:
 - [Contributing guide](./CONTRIBUTING.md)
 - [Architecture Decision Records](./docs/adr)
+- [Installation Guide](./INSTALL.md)
+- [Third-Party Libraries & Licenses](./THIRD_PARTY_LIBRARIES.md)
 
 ## License
 
-<!-- Add your license here -->
+This project is licensed under the [MIT License](./LICENSE).
