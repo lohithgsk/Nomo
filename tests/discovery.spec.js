@@ -2,6 +2,12 @@ const { test, expect } = require("./fixtures");
 const { cleanPage } = require("./helpers");
 
 test.describe("restaurant discovery", () => {
+  test("shows discovery search controls", async ({ page }) => {
+    await cleanPage(page, "/explore.html");
+    await expect(page.getByRole("heading", { name: /find your next favorite/i })).toBeVisible();
+    await expect(page.getByRole("searchbox", { name: /search restaurants/i })).toBeVisible();
+  });
+
   test("shows all restaurants by default", async ({ page }) => {
     await cleanPage(page, "/explore.html");
     await expect(page.locator("#rg .rest")).toHaveCount(50);
@@ -39,6 +45,16 @@ test.describe("restaurant discovery", () => {
     await cleanPage(page, "/explore.html");
     await page.getByRole("searchbox", { name: /search restaurants/i }).fill("not-a-restaurant");
     await expect(page.locator("#rg")).toContainText("Nothing matches yet");
+    await expect(page.locator("#rg .rest")).toHaveCount(0);
+  });
+
+  test("clears a search and restores discovery results", async ({ page }) => {
+    await cleanPage(page, "/explore.html");
+    const search = page.getByRole("searchbox", { name: /search restaurants/i });
+    await search.fill("Nonna");
+    await expect(page.locator("#rg .rest")).toHaveCount(1);
+    await search.fill("");
+    await expect(page.locator("#rg .rest")).toHaveCount(50);
   });
 
   test("opens a restaurant menu from a result card", async ({ page }) => {
