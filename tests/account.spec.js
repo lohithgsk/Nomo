@@ -42,6 +42,43 @@ test.describe("accounts and personalization", () => {
     await expect(page.locator("#um")).toContainText("Test Explorer");
   });
 
+  test("logs in with valid customer credentials", async ({ page }) => {
+    const email = await createCustomer(page, "login");
+    await page.getByRole("button", { name: /account menu/i }).click();
+    await page.getByRole("button", { name: /sign out/i }).click();
+    await page.getByRole("button", { name: /account menu/i }).click();
+    await page.getByRole("button", { name: "Log in" }).click();
+    await page.getByLabel("Email").fill(email);
+    await page.getByLabel("Password").fill("secret1");
+    await page.getByRole("button", { name: "Log in", exact: true }).click();
+    await page.getByRole("button", { name: /account menu/i }).click();
+    await expect(page.locator("#um")).toContainText(email);
+  });
+
+  test("rejects incorrect customer credentials", async ({ page }) => {
+    const email = await createCustomer(page, "wrong-password");
+    await page.getByRole("button", { name: /account menu/i }).click();
+    await page.getByRole("button", { name: /sign out/i }).click();
+    await page.getByRole("button", { name: /account menu/i }).click();
+    await page.getByRole("button", { name: "Log in" }).click();
+    await page.getByLabel("Email").fill(email);
+    await page.getByLabel("Password").fill("wrong-password");
+    await page.getByRole("button", { name: "Log in", exact: true }).click();
+    await expect(page.getByRole("alert")).toHaveText("Email or password is incorrect.");
+  });
+
+  test("updates and persists customer profile details", async ({ page }) => {
+    await createCustomer(page, "profile-update");
+    await page.goto("/profile.html");
+    await page.getByLabel("First name").fill("Updated");
+    await page.getByLabel("Country of residence").fill("Canada");
+    await page.getByRole("button", { name: /save changes/i }).click();
+    await expect(page.getByRole("status")).toHaveText("Changes saved");
+    await page.reload();
+    await expect(page.locator(".settings-profile h2")).toHaveText("Updated Explorer");
+    await expect(page.getByLabel("Country of residence")).toHaveValue("Canada");
+  });
+
   test("toggles and persists the dark theme", async ({ page }) => {
     await cleanPage(page);
     await page.locator("#th").click();
