@@ -15,6 +15,14 @@ test.describe("shopping and community", () => {
     await expect(page.locator(".cart-items")).toContainText("Margherita Pizza");
   });
 
+  test("persists cart contents after reload", async ({ page }) => {
+    await cleanPage(page, "/menu.html?id=0");
+    await page.getByRole("button", { name: "Add to cart" }).first().click();
+    await page.goto("/cart.html");
+    await page.reload();
+    await expect(page.locator(".cart-items")).toContainText("Margherita Pizza");
+  });
+
   test("increments and decrements a cart item", async ({ page }) => {
     await cleanPage(page, "/menu.html?id=0");
     await page.getByRole("button", { name: "Add to cart" }).first().click();
@@ -62,6 +70,12 @@ test.describe("shopping and community", () => {
     await expect(page.locator(".cart-success")).toContainText("Margherita Pizza");
   });
 
+  test("does not allow checkout with an empty cart", async ({ page }) => {
+    await cleanPage(page, "/cart.html");
+    await expect(page.getByRole("button", { name: /place order/i })).toHaveCount(0);
+    await expect(page.locator(".cart-empty")).toBeVisible();
+  });
+
   test("shows the community guest state", async ({ page }) => {
     await cleanPage(page, "/community.html");
     await expect(page.getByRole("heading", { name: /good finds are better shared/i })).toBeVisible();
@@ -75,6 +89,16 @@ test.describe("shopping and community", () => {
     await expect(page.locator("#af")).toContainText("Email");
   });
 
+  test("likes and unlikes a community post", async ({ page }) => {
+    await createCustomer(page, "like");
+    await page.goto("/community.html");
+    const like = page.getByRole("button", { name: /like masala dosa recommendation/i });
+    await like.click();
+    await expect(like).toHaveAttribute("aria-pressed", "true");
+    await like.click();
+    await expect(like).toHaveAttribute("aria-pressed", "false");
+  });
+
   test("allows a customer to publish a recommendation", async ({ page }) => {
     await createCustomer(page, "community");
     await page.goto("/community.html");
@@ -83,5 +107,12 @@ test.describe("shopping and community", () => {
     await page.getByRole("button", { name: /share your note/i }).click();
     await expect(page.locator("#pg")).toContainText("Margherita Pizza");
     await expect(page.locator("#ts")).toHaveText("Posted");
+  });
+
+  test("rejects an empty community recommendation", async ({ page }) => {
+    await createCustomer(page, "empty-post");
+    await page.goto("/community.html");
+    await page.getByRole("button", { name: /share your note/i }).click();
+    await expect(page.getByRole("status")).toHaveText("Add a dish and a short reason");
   });
 });
