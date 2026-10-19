@@ -11,6 +11,15 @@ Nomo is a gamified restaurant discovery platform that turns eating out into an o
 
 **Core loop:** Discover → Visit → Complete → Earn → Unlock → Explore Further
 
+
+
+## 🎬 Project Demo
+
+Watch Nomo in action:
+
+[▶️ Watch the Nomo Demo Video](https://drive.google.com/file/d/1C21V_6h4hnrj18iJf7XVyExx2dGDpPCt/view?usp=sharing)
+
+
 ---
 
 ## Repository structure
